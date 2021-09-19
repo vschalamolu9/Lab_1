@@ -1,0 +1,67 @@
+* {
+    box-sizing: border-box;
+}
+
+header {
+    font-family: sans-serif;
+    flex-direction: row;
+    margin: 0
+}
+
+.eats{
+    font-weight: 600;
+    color: #3E9920;
+}
+
+.container {
+    width: calc(100% - 120px);
+    margin: auto;
+    display: flex;
+    align-items: center;
+}
+
+.searchBar{
+    margin-left: auto;
+    padding: 1.2rem 0;
+}
+
+h1{
+    font-weight: 400;
+}
+
+.headerOption{
+    padding-left: 3rem;
+    font-size: 1.0rem;
+}
+
+.currentDetails, .searchBar{
+    display: flex;
+}
+
+.cart{
+    display: flex;
+    background: black;
+    color: white;
+    padding: 0.8rem 1.6rem;
+    border-radius: 30px;
+    border: 0;
+    font-size: 1.0rem;
+}
+
+.signIn{
+    display: flex;
+    background: #ddd;
+    padding: 0.8rem 1.6rem;
+    margin-left: 3.0rem;
+    border-radius: 30px;
+    border: 0;
+    font-size: 1.0rem;
+}
+
+.ioCart{
+    margin-right: 0.5rem;
+}
+
+.loginIcon{
+    margin-right: 0.5rem;
+}
