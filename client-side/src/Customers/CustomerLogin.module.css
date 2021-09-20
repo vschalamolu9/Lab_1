@@ -1,0 +1,85 @@
+* {
+    box-sizing: border-box;
+}
+
+.input{
+    margin: 2rem auto;
+    padding: 1rem;
+    width: 90%;
+    max-width: 40rem;
+    font-family: sans-serif;
+    align-items: center;
+}
+
+.uberEats{
+    display: block;
+    margin-left: 15rem;
+}
+
+.input label {
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.input input {
+    font: inherit;
+    display: block;
+    width: 100%;
+    border: 1px solid #ccc;
+    padding: 0.15rem;
+    margin-bottom: 0.5rem;
+    height: 2.5rem;
+}
+
+.input input:focus {
+    outline: none;
+    border-color: #3E9920;
+    padding: 8px 18px;
+}
+
+
+h1{
+    font-weight: 400;
+}
+
+.welcome{
+    font-size: 26px;
+    margin-top: 3rem;
+    font-weight: 400;
+}
+
+.eats{
+    font-weight: 600;
+    color: #3E9920;
+    margin-left: -0.1rem;
+}
+
+.input button{
+    font: inherit;
+    display: block;
+    width: 100%;
+    border: 1px solid #ccc;
+    padding: 0.15rem;
+    margin-top: 1.0rem;
+    height: 2.5rem;
+    font-weight: bold;
+    color: white;
+    background-color: #3E9920;
+}
+
+.new{
+    font: inherit;
+    display: block;
+    margin-left: 12rem;
+    font-size: 17px;
+}
+
+.new a{
+    color: #3E9920;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+a:hover{
+    text-decoration: underline;
+}
