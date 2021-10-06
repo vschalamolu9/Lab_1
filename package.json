@@ -1,0 +1,29 @@
+{
+  "name": "ubereats",
+  "version": "1.0.0",
+  "description": "cloning Uber Eats food delivery app.",
+  "main": "server-side/server.js",
+  "scripts": {
+    "start": "node server-side/server",
+    "server": "nodemon server-side/server",
+    "client-side": "npm start --prefix client-side",
+    "dev": "concurrently \"npm run server\" \"npm run client-side\""
+  },
+  "author": "Vamsi Srinivas",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "concurrently": "^6.3.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "express-async-handler": "^1.1.4",
+    "mysql": "^2.18.1",
+    "mysql2": "^2.3.0",
+    "nodemon": "^2.0.13",
+    "sequelize": "^6.6.5"
+  },
+  "devDependencies": {
+    "dotenv": "^10.0.0"
+  }
+}
