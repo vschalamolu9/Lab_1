@@ -7,12 +7,12 @@ const Restaurant = ({restaurant}) => {
 
     return(
         <Card className='my-3 p-3 rounded'>
-            <Link to={`/product/${restaurant.restaurant_id}`}>
+            <Link to={`/restaurant/${restaurant.restaurant_id}`}>
                 <Card.Img src={restaurant.image} variant='top'>
                 </Card.Img>
             </Link>
             <Card.Body>
-                <Link to={`/product/${restaurant.restaurant_id}`}>
+                <Link to={`/restaurant/${restaurant.restaurant_id}`}>
                     <Card.Title as='div'><strong>{`${restaurant.restaurant_name} (${restaurant.restaurant_street})`}</strong></Card.Title>
                 </Link>
                 <Card.Text as='div'>

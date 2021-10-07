@@ -17,6 +17,13 @@ const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
+
+
 db.restaurants = require('./restaurantModel.js')(sequelize, Sequelize);
+db.items = require('./itemModel.js')(sequelize, Sequelize);
+
+//Associations
+db.restaurants.hasMany(db.items)
+db.items.belongsTo(db.restaurants)
 
 module.exports = db;

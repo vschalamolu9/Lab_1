@@ -27,6 +27,7 @@ db.sequelize.sync({force: false}).then(()=>{
 });
 
 require('./routes/restaurant.routes')(app);
+require('./routes/item.routes')(app);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, ()=>{

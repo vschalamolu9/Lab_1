@@ -32,12 +32,12 @@ exports.create = (req, res) => {
         res.send(data);
     }).catch(err => {
         res.status(500).send({
-            message: err.message || 'Some error occurred while creating the Tutorial.'
+            message: err.message || 'Some error occurred while creating the Restaurant.'
         })
     })
 };
 
-// Retrieve all Tutorials from the database.
+// Retrieve all Restaurants from the database.
 exports.findAll = (req, res) => {
 
     Restaurant.findAll()
