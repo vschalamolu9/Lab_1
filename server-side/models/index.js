@@ -21,6 +21,7 @@ db.sequelize = sequelize;
 
 db.restaurants = require('./restaurantModel.js')(sequelize, Sequelize);
 db.items = require('./itemModel.js')(sequelize, Sequelize);
+db.users = require('./userModel.js')(sequelize, Sequelize),
 
 //Associations
 db.restaurants.hasMany(db.items)

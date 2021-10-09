@@ -2,7 +2,7 @@ const db = require('../models');
 const Restaurant = db.restaurants;
 const Op = db.sequelize.Op;
 
-// Create and Save a new Tutorial
+// Create and Save a new Restaurant
 exports.create = (req, res) => {
 
     if(!req.body.restaurant_name){

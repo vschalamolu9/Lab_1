@@ -3,7 +3,6 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const db = require('./models');
 const dotenv = require('dotenv');
-const restaurantRoutes = require('./routes/restaurant.routes');
 
 const app = express();
 
@@ -28,6 +27,7 @@ db.sequelize.sync({force: false}).then(()=>{
 
 require('./routes/restaurant.routes')(app);
 require('./routes/item.routes')(app);
+require('./routes/user.routes')(app);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, ()=>{
