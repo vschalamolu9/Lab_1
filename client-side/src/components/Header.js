@@ -16,10 +16,10 @@ const Header = () => {
 
     return (
         <header>
-            <Navbar bg='dark' variant='dark' expand='lg' collapseOnSelect>
+            <Navbar bg='black' variant='dark' expand='lg' collapseOnSelect>
                 <Container>
                     <LinkContainer to='/'>
-                        <Navbar.Brand>Uber Eats</Navbar.Brand>
+                        <Navbar.Brand>Uber <span style={{color: '#3e9920'}}>Eats</span></Navbar.Brand>
                     </LinkContainer>
                     <Navbar.Toggle aria-controls='basic-navbar-nav' />
                     <Navbar.Collapse id='basic-navbar-nav'>
@@ -27,6 +27,11 @@ const Header = () => {
                             <LinkContainer to='/cart'>
                                 <Nav.Link>
                                     <i className='fas fa-shopping-cart'></i> Cart
+                                </Nav.Link>
+                            </LinkContainer>
+                            <LinkContainer to='/restaurant/home'>
+                                <Nav.Link>
+                                    <i className='fas fa-store'></i> Restaurants
                                 </Nav.Link>
                             </LinkContainer>
                             {userInfo ? (

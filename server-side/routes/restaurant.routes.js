@@ -1,3 +1,6 @@
+const authMiddleWare = require('../middleware/authMiddleware.js')
+const protectRestaurant = authMiddleWare.protectRestaurant;
+
 module.exports = app => {
     const restaurants = require('../controllers/restaurantController.js');
     const items = require('../controllers/itemController.js');
@@ -5,7 +8,9 @@ module.exports = app => {
     let router = require('express').Router();
 
     //Create a new Restaurant
-    router.post('/', restaurants.create);
+    router.post('/register', restaurants.restaurantRegister);
+
+    router.post('/login', restaurants.restaurantLogin)
 
     // Retrieve all restaurants
     router.get('/', restaurants.findAll);

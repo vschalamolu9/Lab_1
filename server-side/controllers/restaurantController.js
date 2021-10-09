@@ -1,9 +1,11 @@
 const db = require('../models');
 const Restaurant = db.restaurants;
 const Op = db.sequelize.Op;
+const tokenModule = require('../utils/generateToken.js')
+const generateRestaurantToken = tokenModule.generateRestaurantToken;
 
 // Create and Save a new Restaurant
-exports.create = (req, res) => {
+exports.restaurantRegister = (req, res) => {
 
     if(!req.body.restaurant_name){
         res.status(400).send({
@@ -16,9 +18,13 @@ exports.create = (req, res) => {
         restaurant_name: req.body.restaurant_name,
         image: req.body.image,
         description: req.body.description,
+        restaurant_email: req.body.restaurant_email,
+        password: req.body.password,
+        restaurant_contact: req.body.restaurant_contact,
         restaurant_street: req.body.restaurant_street,
         restaurant_city: req.body.restaurant_city,
         restaurant_state: req.body.restaurant_state,
+        restaurant_country: req.body.restaurant_country,
         restaurant_zip_code: req.body.restaurant_zip_code,
         delivery_fee: req.body.delivery_fee,
         min_delivery_time: req.body.min_delivery_time,
@@ -51,6 +57,33 @@ exports.findAll = (req, res) => {
         });
 
 };
+
+exports.restaurantLogin = (req, res) => {
+
+    Restaurant.findOne({restaurant_email: req.body.restaurant_email, password: req.body.password})
+        .then(data => {
+            res.status(200).json({
+                restaurant_id : data.restaurant_id,
+                restaurant_name: data.restaurant_name,
+                image: data.image,
+                description: data.description,
+                restaurant_email: data.restaurant_email,
+                restaurant_contact: data.restaurant_contact,
+                restaurant_street: data.restaurant_street,
+                restaurant_city: data.restaurant_city,
+                restaurant_state: data.restaurant_state,
+                restaurant_zip_code: data.restaurant_zip_code,
+                restaurant_country: data.restaurant_country,
+                delivery_fee: data.delivery_fee,
+                min_delivery_time: data.min_delivery_time,
+                max_delivery_time: data.max_delivery_time,
+                rating: data.rating,
+                num_reviews: data.num_reviews,
+                token: generateRestaurantToken(data.restaurant_id, data.restaurant_email)
+            })
+        })
+
+}
 
 // Find a single Tutorial with an id
 exports.findOne = (req, res) => {

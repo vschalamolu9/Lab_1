@@ -1,5 +1,6 @@
 const {getUserProfile} = require("../controllers/userController");
-const protect = require('../middleware/authMiddleware');
+const authMiddleWare = require('../middleware/authMiddleware.js')
+const protect = authMiddleWare.protect;
 
 module.exports = app => {
 

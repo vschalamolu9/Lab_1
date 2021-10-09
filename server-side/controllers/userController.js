@@ -1,6 +1,7 @@
 const db = require('../models');
 const User = db.users;
-const generateToken = require('../utils/generateToken.js')
+const tokenModule = require('../utils/generateToken.js')
+const generateToken = tokenModule.generateToken
 
 //User auth and login
 exports.loginUser = (req, res) => {

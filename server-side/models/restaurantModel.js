@@ -20,6 +20,18 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.STRING,
             allowNull: false
         },
+        restaurant_email: {
+            type: Sequelize.STRING,
+            allowNull: false
+        },
+        password: {
+            type: Sequelize.STRING,
+            allowNull: false
+        },
+        restaurant_contact: {
+            type: Sequelize.STRING,
+            allowNull: false
+        },
         restaurant_street: {
             type: Sequelize.STRING,
             allowNull: false
@@ -35,6 +47,10 @@ module.exports = (sequelize, Sequelize) => {
         restaurant_zip_code: {
             type: Sequelize.STRING,
             allowNull: false,
+        },
+        restaurant_country: {
+            type: Sequelize.STRING,
+            allowNull: false
         },
         delivery_fee:{
             type: Sequelize.DECIMAL,
@@ -52,12 +68,12 @@ module.exports = (sequelize, Sequelize) => {
         },
         rating:{
             type: Sequelize.DECIMAL,
-            allowNull: false,
+            allowNull: true,
             default: 0
         },
         num_reviews:{
             type: Sequelize.INTEGER,
-            required: true,
+            required: false,
             default: 0
         }
     })

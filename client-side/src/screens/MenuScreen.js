@@ -17,16 +17,16 @@ const MenuScreen = ({match}) => {
 
     return(
         <>
-            <h1>Menu Items</h1>
-            {loading ? (<Loader />) : error ? (<Message variant='danger'>{error}</Message>) : (
-                <Row>
-                    {items.map(item => (
-                        <Col key={item.item_id} sm={12} md={6} lg={4} xl={3}>
-                            <Item item={item}/>
-                        </Col>
-                    ))}
-                </Row>
-            )}
+            {loading && (<Loader />)}
+            {error && (<Message variant='danger'>{error}</Message>)}
+            <Row>
+                <h1>Menu Items</h1>
+                {items.map(item => (
+                    <Col key={item.item_id} sm={12} md={6} lg={4} xl={3}>
+                        <Item item={item}/>
+                    </Col>
+                ))}
+            </Row>
         </>
     )
 }

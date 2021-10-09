@@ -19,7 +19,6 @@ const HomeScreen = () => {
 
     return(
         <>
-            <h1>Restaurants</h1>
             {loading ? (<Loader />) : error ? (<Message variant='danger'>{error}</Message>) : (
                 <Row>
                     {restaurants.map(restaurant => (
