@@ -1,5 +1,11 @@
-import {CART_ADD_ITEM, CART_REMOVE_ITEM} from "../constants/cartConstants";
+import {
+    CART_ADD_ITEM,
+    CART_REMOVE_ITEM,
+    CART_SAVE_DELIVERY_ADDRESS,
+    CART_SAVE_PAYMENT_METHOD
+} from "../constants/cartConstants";
 import Axios from 'axios';
+import {useSelector} from "react-redux";
 
 export const addToCart = (id, qty) => async(dispatch, getState) => {
 
@@ -12,6 +18,7 @@ export const addToCart = (id, qty) => async(dispatch, getState) => {
             name: data.item_name,
             image: data.image,
             price: data.item_price,
+            restaurant_id: id,
             qty
         }
     })
@@ -27,4 +34,24 @@ export const removeFromCart = (id) => (dispatch, getState) => {
     })
 
     localStorage.setItem('cartItems', JSON.stringify(getState().cart.cartItems))
+}
+
+export const saveDeliveryAddress = (data) => (dispatch) => {
+
+    dispatch({
+        type: CART_SAVE_DELIVERY_ADDRESS,
+        payload: data
+    })
+
+    localStorage.setItem('deliveryAddress', JSON.stringify(data))
+}
+
+export const savePaymentMethod = (data) => (dispatch) => {
+
+    dispatch({
+        type: CART_SAVE_PAYMENT_METHOD,
+        payload: data
+    })
+
+    localStorage.setItem('paymentMethod', JSON.stringify(data))
 }

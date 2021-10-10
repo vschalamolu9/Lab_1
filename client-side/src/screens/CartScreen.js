@@ -28,7 +28,7 @@ const CartScreen = ({match, location, history}) => {
     }
 
     const checkOutHandler = () => {
-        history.push('/login?redirect=shipping')
+        history.push('/login?redirect=delivery')
     }
 
     return(
@@ -37,6 +37,8 @@ const CartScreen = ({match, location, history}) => {
                 <h1>Shopping Cart</h1>
                 {cartItems.length === 0 ? <Message>Your cart is empty <Link to='/'>Go Back</Link></Message> : (
                     <ListGroup variant='flush'>
+                        <Link to='/restaurants/'>Add more items</Link>
+                        <br/>
                         {cartItems.map(item => (
                             <ListGroup.Item key={item.product}>
                                 <Row>

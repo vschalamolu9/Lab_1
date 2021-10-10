@@ -1,5 +1,4 @@
 const {Sequelize} = require('sequelize');
-const Restaurant = require('./restaurantModel');
 module.exports = (sequelize, Sequelize) => {
 
     const Item = sequelize.define("item", {
