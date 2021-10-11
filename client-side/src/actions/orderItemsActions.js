@@ -17,6 +17,7 @@ export const createOrderItems = (
 
         const config = {
             headers: {
+                'Content-type' : 'application/json',
                 Authorization: `Bearer ${userInfo.token}`,
             },
         }

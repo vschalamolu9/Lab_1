@@ -5,11 +5,15 @@ import {Row, Col} from 'react-bootstrap';
 import Message from "../components/Message";
 import Loader from "../components/Loader";
 import Restaurant from "../components/Restaurant";
+import RestaurantProfileScreen from "./RestaurantProfileScreen";
 
 const HomeScreen = () => {
     const dispatch = useDispatch()
 
     const restaurantList = useSelector((state) => state.restaurantList)
+
+    const restaurantLogin = useSelector(state => state.restaurantLogin)
+    const { restaurantInfo } = restaurantLogin
 
     const {loading, error, restaurants} = restaurantList;
 
@@ -19,7 +23,7 @@ const HomeScreen = () => {
 
     return(
         <>
-            {loading ? (<Loader />) : error ? (<Message variant='danger'>{error}</Message>) : (
+            {loading ? (<Loader />) : error ? (<Message variant='danger'>{error}</Message>) : restaurantInfo ?  (<RestaurantProfileScreen />) : (
                 <Row>
                     {restaurants.map(restaurant => (
                         <Col key={restaurant.restaurant_id} sm={12} md={6} lg={4} xl={3}>

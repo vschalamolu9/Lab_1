@@ -14,15 +14,15 @@ const LoginRestaurantScreen = ({ location, history }) => {
     const dispatch = useDispatch()
 
     const restaurantLogin = useSelector((state) => state.restaurantLogin)
-    const { loading, error, restaurantData } = restaurantLogin
+    const { loading, error, restaurantInfo } = restaurantLogin
 
     const redirect = location.search ? location.search.split('=')[1] : '/'
 
     useEffect(() => {
-        if (restaurantData) {
+        if (restaurantInfo) {
             history.push(redirect)
         }
-    }, [history, restaurantData, redirect])
+    }, [history, restaurantInfo, redirect])
 
     const submitHandler = (e) => {
         e.preventDefault()

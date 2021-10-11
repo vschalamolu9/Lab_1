@@ -37,19 +37,52 @@ exports.addNewOrder = (req, res) => {
     });
 }
 
-exports.fetchUserOrders = async (req, res) => {
+exports.fetchOrdersById = (req, res) => {
+    if(!req.body.order_id){
+        res.status(400).send({
+            message: "Unable to find order id."
+        })
+        return;
+    }
 
-    if(!req.body.userUserId){
+    const order_id = req.body.order_id
+
+    Order.findOne({include: [{model: db.orderItems, include: [{model: db.items}]}], where: {order_id: order_id}}).then(order_data => {
+        if(!order_data){
+            res.status(400).send({
+                message: 'Unable to find order with the given order id'
+            })
+            return;
+        }
+        res.send(order_data)
+    }).catch(err => {
+        res.status(500).send({
+            message: err.message || 'Unable to get the order.'
+        });
+    });
+
+}
+
+exports.fetchUserOrders = (req, res) => {
+
+    if(!req.body.user_id){
         res.status(400).send({
             message: "User should be logged in."
         });
         return;
     }
 
-    const user_id = req.body.userUserId;
+    const user_id = req.body.user_id;
 
 
     Order.findAll({include: [{model: db.orderItems, include: [{model: db.items}]}], where: {userUserId: user_id}}).then(orders => {
+
+        if(!orders){
+            res.status(400).send({
+                message: 'Unable to find orders for you.'
+            })
+            return;
+        }
         res.send(orders)
     }).catch(err => {
         res.status(500).send({
@@ -70,6 +103,13 @@ exports.fetchRestaurantOrders = async(req, res) => {
     const restaurant_id = req.body.restaurant_id
 
     Order.findAll({include: [{model: db.orderItems, include: [{model: db.items}]}], where: {restaurantRestaurantId: restaurant_id}}).then(orders => {
+
+        if(!orders){
+            res.status(400).send({
+                message: 'Unable to find orders for your restaurant.'
+            })
+            return;
+        }
         res.send(orders)
     }).catch(err => {
         res.status(500).send({

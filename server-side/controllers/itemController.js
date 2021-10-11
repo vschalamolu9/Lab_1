@@ -58,22 +58,33 @@ exports.findOne = (req, res) => {
     })
 };
 
-// Update a Tutorial by the id in the request
-exports.update = (req, res) => {
+exports.updateItem = (req, res) => {
 
-};
+    Item.findOne({where: {item_id: req.body.item_id}})
+        .then(data => {
+            data.item_name = req.body.item_name || data.item_name
+            data.image = req.body.image || data.image
+            data.item_price = req.body.item_price || data.item_price
+            data.min_cal = req.body.min_cal || data.min_cal
+            data.max_cal = req.body.max_cal || data.max_cal
 
-// Delete a Tutorial with the specified id in the request
-exports.delete = (req, res) => {
 
-};
-
-// Delete all Tutorials from the database.
-exports.deleteAll = (req, res) => {
-
-};
-
-// Find all published Tutorials
-exports.findAllPublished = (req, res) => {
-
-};
+            data.save().then(
+                res.status(200).json({
+                    item_name : data.item_name,
+                    image : data.image,
+                    item_price : data.item_price,
+                    min_cal : data.min_cal,
+                    max_cal : data.max_cal
+                })
+            ).catch((error) => {
+                res.status(403).send({
+                    message: error.message || 'Some error occurred while updating.'
+                })
+            })
+        }).catch(err => {
+            res.status(500).send({
+                message : err.message || 'Some error occurred while retrieving Restaurant profile.'
+            })
+    })
+}

@@ -85,6 +85,59 @@ exports.restaurantLogin = (req, res) => {
 
 }
 
+
+exports.updateRestaurantProfile = (req, res) => {
+
+    Restaurant.findOne({where: {restaurant_id: req.body.restaurant_id}})
+        .then(data => {
+            data.restaurant_name = req.body.restaurant_name || data.restaurant_name
+            data.image = req.body.image || data.image
+            data.description = req.body.description || data.description
+            data.restaurant_email = req.body.restaurant_email || data.restaurant_email
+            if(req.body.password){
+                data.password = req.body.password || data.password
+            }
+            data.restaurant_contact = req.body.restaurant_contact || data.restaurant_contact
+            data.restaurant_street = req.body.restaurant_street || data.restaurant_street
+            data.restaurant_city = req.body.restaurant_city || data.restaurant_city
+            data.restaurant_state = req.body.restaurant_state || data.restaurant_state
+            data.restaurant_country = req.body.restaurant_country || data.restaurant_country
+            data.restaurant_zip_code = req.body.restaurant_zip_code || data.restaurant_zip_code
+            data.delivery_fee = req.body.delivery_fee || data.delivery_fee
+            data.min_delivery_time = req.body.min_delivery_time || data.min_delivery_time
+            data.max_delivery_time = req.body.max_delivery_time || data.max_delivery_time
+
+
+            data.save().then(
+                res.status(200).json({
+                    restaurant_name : data.restaurant_name,
+                    image : data.image,
+                    description : data.description,
+                    restaurant_email : data.restaurant_email,
+                    restaurant_contact : data.restaurant_contact,
+                    restaurant_street : data.restaurant_street,
+                    restaurant_city : data.restaurant_city,
+                    restaurant_state : data.restaurant_state,
+                    restaurant_country : data.restaurant_country,
+                    restaurant_zip_code : data.restaurant_zip_code,
+                    delivery_fee : data.delivery_fee,
+                    min_delivery_time : data.min_delivery_time,
+                    max_delivery_time : data.max_delivery_time,
+                    token: generateRestaurantToken(data.restaurant_id, data.restaurant_email)
+                })
+            ).catch((error) => {
+                res.status(403).send({
+                    message: error.message || 'Some error occurred while updating'
+                })
+            })
+        })
+        .catch(err => {
+            res.status(500).send({
+                message: err.message || 'Some error occurred while retrieving User profile.'
+            });
+        });
+}
+
 // Find a single Tutorial with an id
 exports.findOne = (req, res) => {
 

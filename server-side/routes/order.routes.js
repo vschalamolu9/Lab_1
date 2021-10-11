@@ -12,8 +12,8 @@ module.exports = app => {
     router.route('/newOrder').post(protect, orders.addNewOrder);
     router.route('/addorderitems').post(protect, orderItems.addOrderItems);
 
-    router.route('/getuserorders').post(orders.fetchUserOrders);
-    router.route('/getrestaurantorders').post(orders.fetchRestaurantOrders);
+    router.route('/getuserorders').post(protect, orders.fetchUserOrders);
+    router.route('/getorderbyid').post(protect, orders.fetchOrdersById);
 
     app.use('/api/users', router)
 

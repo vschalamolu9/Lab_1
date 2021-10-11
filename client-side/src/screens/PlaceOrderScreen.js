@@ -29,7 +29,7 @@ const PlaceOrderScreen = ({history}) => {
     const delivery_address = `${cart.deliveryAddress.street}, ${cart.deliveryAddress.city}, ${cart.deliveryAddress.province}, ${cart.deliveryAddress.country}`
 
     const orderCreate = useSelector(state => state.orderCreate)
-    const {state, success, error} = orderCreate
+    const {order, success, error} = orderCreate
 
     useEffect(() => {
         if(success){
@@ -37,10 +37,10 @@ const PlaceOrderScreen = ({history}) => {
                 dispatch(createOrderItems(
                     cart.cartItems[i].qty,
                     cart.cartItems[i].product,
-                    state.order_id
+                    order.order_id
                 ))
             }
-            history.push(`/order/${state.order_id}`)
+            history.push(`/order/${order.order_id}`)
         }
         //eslint-disable-next-line
     }, [history, success])

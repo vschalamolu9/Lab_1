@@ -3,15 +3,28 @@ import { useDispatch, useSelector } from 'react-redux'
 import { LinkContainer } from 'react-router-bootstrap'
 import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap'
 import { logout } from '../actions/userActions'
+import {restaurantLogout} from "../actions/restaurantActions";
 
-const Header = () => {
+const Header = ({history}) => {
     const dispatch = useDispatch()
 
     const userLogin = useSelector((state) => state.userLogin)
     const { userInfo } = userLogin
 
+    const restaurantLogin = useSelector(state => state.restaurantLogin)
+    const { restaurantInfo } = restaurantLogin
+
     const logoutHandler = () => {
         dispatch(logout())
+    }
+
+    const restaurantLogoutHandler = () => {
+        dispatch(restaurantLogout())
+        history.push('/login')
+    }
+
+    const viewMenuItemsHandler = () => {
+        history.push('/restaurant/viewitems')
     }
 
     return (
@@ -29,11 +42,22 @@ const Header = () => {
                                     <i className='fas fa-shopping-cart'></i> Cart
                                 </Nav.Link>
                             </LinkContainer>
-                            <LinkContainer to='/restaurant/home'>
-                                <Nav.Link>
-                                    <i className='fas fa-store'></i> Restaurants
-                                </Nav.Link>
-                            </LinkContainer>
+                            { restaurantInfo ? (
+                                <NavDropdown title={restaurantInfo.restaurant_name} id='restaurant_name'>
+                                    <LinkContainer to='/restaurant/viewitems'>
+                                        <NavDropdown.Item>View Menu Items</NavDropdown.Item>
+                                    </LinkContainer>
+                                    <NavDropdown.Item onClick={restaurantLogoutHandler}>
+                                        Logout
+                                    </NavDropdown.Item>
+                                </NavDropdown>
+                            ) : (
+                                <LinkContainer to='/restaurant/home'>
+                                    <Nav.Link>
+                                        <i className='fas fa-user' /> Restaurants
+                                    </Nav.Link>
+                                </LinkContainer>
+                            ) }
                             {userInfo ? (
                                 <NavDropdown title={userInfo.first_name} id='username'>
                                     <LinkContainer to='/profile'>
@@ -46,7 +70,7 @@ const Header = () => {
                             ) : (
                                 <LinkContainer to='/login'>
                                     <Nav.Link>
-                                        <i className='fas fa-user'></i> Sign In
+                                        <i className='fas fa-user' /> Sign In
                                     </Nav.Link>
                                 </LinkContainer>
                             )}

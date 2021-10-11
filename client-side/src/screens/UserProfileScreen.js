@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import { Form, Button, Row, Col } from 'react-bootstrap'
+import { Form, Button, Row, Col, Table } from 'react-bootstrap'
+import {LinkContainer} from 'react-router-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
 import { getUserDetails, updateUserProfile }  from '../actions/userActions'
+import { getUserOrdersList } from '../actions/orderActions'
 
 const UserProfileScreen = ({ location, history }) => {
     const [firstName, setFirstName] = useState('')
@@ -29,11 +31,10 @@ const UserProfileScreen = ({ location, history }) => {
     const userUpdateProfile = useSelector((state) => state.userUpdateProfile)
     const { success } = userUpdateProfile
 
-    /*const userUpdateProfile = useSelector((state) => state.userUpdateProfile)
-    const { success } = userUpdateProfile
 
-    const orderListMy = useSelector((state) => state.orderListMy)
-    const { loading: loadingOrders, error: errorOrders, orders } = orderListMy*/
+
+    const userOrdersList = useSelector((state) => state.userOrdersList)
+    const { loading: loadingOrders, error: errorOrders, orders } = userOrdersList
 
     useEffect(() => {
 
@@ -42,6 +43,7 @@ const UserProfileScreen = ({ location, history }) => {
         } else {
             if(!user.email_id){
                 dispatch(getUserDetails('profile', userInfo.user_id))
+                dispatch(getUserOrdersList(userInfo.user_id))
             }
             else{
                 setFirstName(user.first_name)
@@ -190,6 +192,32 @@ const UserProfileScreen = ({ location, history }) => {
             </Col>
             <Col md={9}>
                 <h2>My Orders</h2>
+                { loadingOrders ? <Loader /> : errorOrders ? <Message variant='danger'>{errorOrders}</Message> : (
+                    <Table stripped bordered hover responsive className='table-sm'>
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>DATE</th>
+                            <th>TOTAL</th>
+                            <th>VIEW RECEIPT</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {orders.map(order => (
+                            <tr key={order.order_id}>
+                                <td>{order.order_id}</td>
+                                <td>{order.createdAt.substring(0,10)}</td>
+                                <td>{order.total_price}</td>
+                                <td>
+                                    <LinkContainer to={`order/${order.order_id}`}>
+                                        <Button className='btn-sm' variant='light'>Details</Button>
+                                    </LinkContainer>
+                                </td>
+                            </tr>
+                        ))}
+                        </tbody>
+                    </Table>
+                )}
             </Col>
         </Row>
     )
