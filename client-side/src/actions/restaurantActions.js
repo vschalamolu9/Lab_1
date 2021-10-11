@@ -12,9 +12,14 @@ import {
     RESTAURANT_UPDATE_PROFILE_REQUEST,
     RESTAURANT_UPDATE_PROFILE_SUCCESS,
     RESTAURANT_UPDATE_PROFILE_FAIL,
-    RESTAURANT_DETAILS_REQUEST, RESTAURANT_DETAILS_FAIL, RESTAURANT_DETAILS_SUCCESS,
+    RESTAURANT_DETAILS_REQUEST,
+    RESTAURANT_DETAILS_FAIL,
+    RESTAURANT_DETAILS_SUCCESS,
+    RESTAURANT_ITEMS_LIST_REQUEST,
+    RESTAURANT_ITEMS_LIST_SUCCESS, RESTAURANT_ITEMS_LIST_FAIL,
 } from "../constants/restaurantConstants";
 import Axios from 'axios';
+import {ITEM_LIST_FAIL, ITEM_LIST_REQUEST, ITEM_LIST_SUCCESS} from "../constants/itemConstants";
 
 export const listRestaurants = () => async(dispatch) => {
     try{
@@ -184,5 +189,29 @@ export const updateRestaurantProfile = (restaurant_id, restaurant_name, image, d
                     ? error.response.data.message
                     : error.message,
         })
+    }
+}
+
+export const restaurantMenuItemsList = (restaurant_id) => async(dispatch, getState) => {
+
+    try{
+        dispatch({type: RESTAURANT_ITEMS_LIST_REQUEST})
+
+        const {
+            restaurantLogin: {restaurantInfo},
+        } = getState()
+
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization : `Bearer ${restaurantInfo.token}`
+            },
+        }
+
+        const {data} = await Axios.post('http://localhost:5000/api/restaurants/getitems',{restaurant_id}, config)
+        dispatch({type: RESTAURANT_ITEMS_LIST_SUCCESS, payload:data})
+    }
+    catch(error){
+        dispatch({type: RESTAURANT_ITEMS_LIST_FAIL, payload: error.response && error.response.data.message ? error.response.data.message : error.message})
     }
 }

@@ -33,7 +33,7 @@ exports.create = (req, res) => {
 //find all Items of a Restaurant
 exports.findAllItems = (req, res) =>{
 
-    const restaurant_id = req.params.restaurant_id;
+    const restaurant_id = req.params.restaurant_id || req.body.restaurant_id;
 
     Item.findAll({where: {restaurantRestaurantId : restaurant_id}}).then(data => {
         res.send(data);

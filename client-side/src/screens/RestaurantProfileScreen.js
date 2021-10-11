@@ -233,7 +233,7 @@ const RestaurantProfileScreen = ({ location, history }) => {
                                 <td>{order.total_price}</td>
                                 <td>
                                     <LinkContainer to={`order/${order.order_id}`}>
-                                        <Button className='btn-sm' variant='light'>View Receipt</Button>
+                                        <Button className='btn-sm' variant='light'>View Order</Button>
                                     </LinkContainer>
                                 </td>
                             </tr>

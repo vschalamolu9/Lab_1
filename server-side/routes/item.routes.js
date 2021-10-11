@@ -7,7 +7,7 @@ module.exports = app => {
     let router = require('express').Router();
 
     //Create a new Item
-    router.post('/',items.create);
+    router.route('/additem').post(protectRestaurant, items.create)
 
     router.get('/:id', items.findOne);
 

@@ -13,7 +13,11 @@ import {
     RESTAURANT_UPDATE_PROFILE_FAIL,
     RESTAURANT_UPDATE_PROFILE_SUCCESS,
     RESTAURANT_DETAILS_REQUEST,
-    RESTAURANT_DETAILS_SUCCESS, RESTAURANT_DETAILS_FAIL, RESTAURANT_DETAILS_RESET
+    RESTAURANT_DETAILS_SUCCESS,
+    RESTAURANT_DETAILS_FAIL,
+    RESTAURANT_DETAILS_RESET,
+    RESTAURANT_ITEMS_LIST_REQUEST,
+    RESTAURANT_ITEMS_LIST_SUCCESS, RESTAURANT_ITEMS_LIST_FAIL
 } from "../constants/restaurantConstants";
 import {
     USER_DETAILS_FAIL,
@@ -21,6 +25,7 @@ import {
     USER_DETAILS_RESET,
     USER_DETAILS_SUCCESS
 } from "../constants/userConstants";
+import {ITEM_LIST_FAIL, ITEM_LIST_REQUEST, ITEM_LIST_SUCCESS} from "../constants/itemConstants";
 
 export const restaurantListReducer = (state = {restaurants: []}, action) => {
 
@@ -91,6 +96,20 @@ export const restaurantDetailsReducer = (state = { restaurant: {}}, action) => {
             return { loading: false, error: action.payload }
         case RESTAURANT_DETAILS_RESET:
             return { restaurant: {}}
+        default:
+            return state
+    }
+}
+
+export const restaurantItemListReducer = (state = {restaurantMenuItems: []}, action) => {
+
+    switch(action.type){
+        case RESTAURANT_ITEMS_LIST_REQUEST:
+            return {loading: true, restaurantMenuItems: []}
+        case RESTAURANT_ITEMS_LIST_SUCCESS:
+            return {loading: false, restaurantMenuItems: action.payload}
+        case RESTAURANT_ITEMS_LIST_FAIL:
+            return {loading: false, error: action.payload}
         default:
             return state
     }

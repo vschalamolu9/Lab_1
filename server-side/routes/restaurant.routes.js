@@ -18,6 +18,9 @@ module.exports = app => {
 
     //Retrieve all Items of restaurants
     router.get(`/:restaurant_id`, items.findAllItems);
+
+    router.route('/getitems').post(protectRestaurant, items.findAllItems);
+
     router.route('/getrestaurantorders').post(protectRestaurant, orders.fetchRestaurantOrders);
 
     router.route('/profile').put(protectRestaurant, restaurants.updateRestaurantProfile);

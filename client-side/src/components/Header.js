@@ -44,6 +44,9 @@ const Header = ({history}) => {
                             </LinkContainer>
                             { restaurantInfo ? (
                                 <NavDropdown title={restaurantInfo.restaurant_name} id='restaurant_name'>
+                                    <LinkContainer to='/restaurant/profile'>
+                                        <NavDropdown.Item>Restaurant Profile</NavDropdown.Item>
+                                    </LinkContainer>
                                     <LinkContainer to='/restaurant/viewitems'>
                                         <NavDropdown.Item>View Menu Items</NavDropdown.Item>
                                     </LinkContainer>
