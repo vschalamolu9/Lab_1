@@ -53,7 +53,7 @@ module.exports = (sequelize, Sequelize) => {
             allowNull: false
         },
         delivery_fee:{
-            type: Sequelize.DECIMAL,
+            type: Sequelize.DECIMAL(5,2),
             allowNull: false
         },
         min_delivery_time:{
@@ -67,7 +67,7 @@ module.exports = (sequelize, Sequelize) => {
             default: 60
         },
         rating:{
-            type: Sequelize.DECIMAL,
+            type: Sequelize.DECIMAL(5, 2),
             allowNull: true,
             default: 0
         },

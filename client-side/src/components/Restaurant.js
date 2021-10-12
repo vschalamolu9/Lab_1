@@ -7,7 +7,6 @@ const Restaurant = ({restaurant}) => {
 
     return(
         <>
-            <h1>Restaurants</h1>
             <Card className='my-3 p-3 rounded'>
                 <Link to={`/restaurants/${restaurant.restaurant_id}`}>
                     <Card.Img src={restaurant.image} variant='top'>
@@ -19,6 +18,9 @@ const Restaurant = ({restaurant}) => {
                     </Link>
                     <Card.Text as='div'>
                         { restaurant.rating && <Rating value={restaurant.rating} text={`${restaurant.num_reviews} reviews`} /> }
+                    </Card.Text>
+                    <Card.Text as='h7'>
+                         Delivery & PickUp
                     </Card.Text>
                     <br/>
                     <Card.Text as='h7'>{`$${restaurant.delivery_fee} Delivery Fee | ${restaurant.min_delivery_time}-${restaurant.max_delivery_time} mins`}</Card.Text>

@@ -12,12 +12,16 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.STRING,
             allowNull: false
         },
+        description: {
+            type: Sequelize.STRING,
+            allowNull: false
+        },
         image: {
             type: Sequelize.STRING,
             allowNull: false
         },
         item_price: {
-            type: Sequelize.DECIMAL,
+            type: Sequelize.DECIMAL(5,2),
             allowNull: false
         },
         min_cal:{

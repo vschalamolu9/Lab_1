@@ -25,6 +25,7 @@ const HomeScreen = () => {
         <>
             {loading ? (<Loader />) : error ? (<Message variant='danger'>{error}</Message>) : restaurantInfo ?  (<RestaurantProfileScreen />) : (
                 <Row>
+                    <h1>Restaurants</h1>
                     {restaurants.map(restaurant => (
                         <Col key={restaurant.restaurant_id} sm={12} md={6} lg={4} xl={3}>
                             <Restaurant restaurant={restaurant}/>

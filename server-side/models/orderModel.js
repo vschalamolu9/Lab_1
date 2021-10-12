@@ -10,19 +10,19 @@ module.exports = (sequelize, Sequelize) => {
             primaryKey: true
         },
         items_price: {
-            type: Sequelize.DECIMAL,
+            type: Sequelize.DECIMAL(5,2),
             allowNull: false
         },
         tax_price: {
-            type: Sequelize.DECIMAL,
+            type: Sequelize.DECIMAL(5,2),
             allowNull: false
         },
         delivery_fee:{
-            type: Sequelize.DECIMAL,
+            type: Sequelize.DECIMAL(5,2),
             allowNull: false
         },
         total_price: {
-            type:Sequelize.DECIMAL,
+            type:Sequelize.DECIMAL(5,2),
             allowNull: false
         },
         payment_method:{

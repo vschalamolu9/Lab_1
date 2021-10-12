@@ -46,6 +46,7 @@ const RegisterRestaurantScreen = ({ location, history }) => {
         else{
             dispatch(registerRestaurant(restaurantName, image, description, email,password, phoneNumber, street, city, province,
                 country, zipCode, deliveryFee, minDeliveryTime, maxDeliveryTime))
+            history.push('/restaurant?redirect=profile')
         }
 
     }

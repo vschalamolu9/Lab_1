@@ -25,6 +25,8 @@ const RestaurantProfileScreen = ({ location, history }) => {
     const [maxDeliveryTime, setMaxDeliveryTime] = useState('')
     const [message,  setMessage] = useState(null)
 
+
+
     const dispatch = useDispatch()
 
     const restaurantDetails = useSelector((state) => state.restaurantDetails)

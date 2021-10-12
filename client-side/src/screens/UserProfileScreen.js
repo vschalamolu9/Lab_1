@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import { Form, Button, Row, Col, Table } from 'react-bootstrap'
 import {LinkContainer} from 'react-router-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
@@ -6,8 +6,10 @@ import Message from '../components/Message'
 import Loader from '../components/Loader'
 import { getUserDetails, updateUserProfile }  from '../actions/userActions'
 import { getUserOrdersList } from '../actions/orderActions'
+import Select from "react-select";
+import countryList from "react-select-country-list";
 
-const UserProfileScreen = ({ location, history }) => {
+const UserProfileScreen = ({ history }) => {
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
     const [email, setEmail] = useState('')
@@ -17,8 +19,14 @@ const UserProfileScreen = ({ location, history }) => {
     const [street, setStreet] = useState('')
     const [city, setCity] = useState('')
     const [province, setProvince] = useState('')
-    const [country, setCountry] = useState('')
+    const [zipCode, setZipCode] = useState('');
     const [message,  setMessage] = useState(null)
+    const [value, setValue] = useState('');
+    const options = useMemo(()=>countryList().getData(), []);
+
+    const changeHandler = value => {
+        setValue(value)
+    }
 
     const dispatch = useDispatch()
 
@@ -35,6 +43,21 @@ const UserProfileScreen = ({ location, history }) => {
 
     const userOrdersList = useSelector((state) => state.userOrdersList)
     const { loading: loadingOrders, error: errorOrders, orders } = userOrdersList
+
+    const validateName = (enteredName) => {
+        let re = /^[a-zA-Z ]{2,30}$/;
+        return re.test(enteredName);
+    }
+
+    const validatePhoneNumber = (phoneNumber) => {
+        let regex = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+        return regex.test(phoneNumber);
+    }
+
+    const validateEmail = (enteredEmail) => {
+        let re = /\S+@\S+\.\S+/;
+        return re.test(enteredEmail);
+    }
 
     useEffect(() => {
 
@@ -53,7 +76,8 @@ const UserProfileScreen = ({ location, history }) => {
                 setCity(user.city)
                 setStreet(user.street)
                 setProvince(user.province)
-                setCountry(user.country)
+                setValue(value)
+                setZipCode(user.zipCode)
 
             }
         }
@@ -61,10 +85,22 @@ const UserProfileScreen = ({ location, history }) => {
 
     const submitHandler = (e) => {
         e.preventDefault()
-        if (password !== confirmPassword) {
+        if(!validateName(firstName) || !validateName(lastName)){
+            setMessage('Please enter a valid name')
+        }
+        if(!validateEmail(email)){
+            setMessage('Please enter a valid email')
+        }
+        if(password !== confirmPassword){
             setMessage('Passwords do not match')
+        }
+        if(password.length < 10){
+            setMessage('Your password should contain atleast 10 characters')
+        }
+        if(!validatePhoneNumber(phoneNumber)){
+            setMessage('Please enter a valid phone number')
         } else {
-            dispatch(updateUserProfile(user.user_id, firstName, lastName, email, password, phoneNumber, street, city, province, country))
+            dispatch(updateUserProfile(user.user_id, firstName, lastName, email, password, phoneNumber, street, city, province, value.label, zipCode))
         }
     }
 
@@ -176,12 +212,17 @@ const UserProfileScreen = ({ location, history }) => {
                     <br/>
                     <Form.Group controlId='country'>
                         <Form.Label>Country</Form.Label>
+                        <Select options={options} value={value} onChange={changeHandler}/>
+                    </Form.Group>
+                    <br/>
+                    <Form.Group controlId='zipCode'>
+                        <Form.Label>ZIP Code</Form.Label>
                         <Form.Control
                             required
                             type='text'
-                            placeholder='Country'
-                            value={country}
-                            onChange={(e) => setCountry(e.target.value)}
+                            placeholder='ZIP Code'
+                            value={zipCode}
+                            onChange={(e) => setZipCode(e.target.value)}
                         />
                     </Form.Group>
                     <br/>

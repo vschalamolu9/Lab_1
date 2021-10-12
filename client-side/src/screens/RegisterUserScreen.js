@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, {useState, useEffect, useMemo} from 'react'
 import { Link } from 'react-router-dom'
 import { Form, Button, Row, Col } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
@@ -6,6 +6,10 @@ import Message from '../components/Message'
 import Loader from '../components/Loader'
 import FormContainer from '../components/FormContainer'
 import { register }  from '../actions/userActions'
+import Select from "react-select";
+import countryList from "react-select-country-list";
+
+
 
 const RegisterUserScreen = ({ location, history }) => {
     const [firstName, setFirstName] = useState('')
@@ -17,8 +21,11 @@ const RegisterUserScreen = ({ location, history }) => {
     const [street, setStreet] = useState('')
     const [city, setCity] = useState('')
     const [province, setProvince] = useState('')
-    const [country, setCountry] = useState('')
+    const [zipCode, setZipCode] = useState('')
     const [message,  setMessage] = useState(null)
+    const [value, setValue] = useState('');
+    const options = useMemo(()=>countryList().getData(), []);
+
 
     const dispatch = useDispatch()
 
@@ -27,19 +34,50 @@ const RegisterUserScreen = ({ location, history }) => {
 
     const redirect = location.search ? location.search.split('=')[1] : '/'
 
+    const validateName = (enteredName) => {
+        let re = /^[a-zA-Z ]{2,30}$/;
+        return re.test(enteredName);
+    }
+
+    const validatePhoneNumber = (phoneNumber) => {
+        let regex = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+        return regex.test(phoneNumber);
+    }
+
+    const validateEmail = (enteredEmail) => {
+        let re = /\S+@\S+\.\S+/;
+        return re.test(enteredEmail);
+    }
+
     useEffect(() => {
         if (userInfo) {
             history.push(redirect)
         }
     }, [history, userInfo, redirect])
 
+    const changeHandler = value => {
+        console.log(value.label)
+        setValue(value)
+    }
+
     const submitHandler = (e) => {
         e.preventDefault()
+        if(!validateName(firstName) || !validateName(lastName)){
+            setMessage('Please enter a valid name')
+        }
+        if(!validateEmail(email)){
+            setMessage('Please enter a valid email')
+        }
         if(password !== confirmPassword){
             setMessage('Passwords do not match')
         }
-        else{
-            dispatch(register(firstName, lastName, email, password, phoneNumber, street, city, province, country))
+        if(password.length < 10){
+            setMessage('Your password should contain atleast 10 characters')
+        }
+        if(!validatePhoneNumber(phoneNumber)){
+            setMessage('Please enter a valid phone number')
+        } else{
+            dispatch(register(firstName, lastName, email, password, phoneNumber, street, city, province, value.label, zipCode))
         }
 
     }
@@ -152,12 +190,17 @@ const RegisterUserScreen = ({ location, history }) => {
                 <br/>
                 <Form.Group controlId='country'>
                     <Form.Label>Country</Form.Label>
+                    <Select options={options} value={value} onChange={changeHandler}/>
+                </Form.Group>
+                <br/>
+                <Form.Group controlId='zipCode'>
+                    <Form.Label>ZIP Code</Form.Label>
                     <Form.Control
                         required
-                        type='text'
-                        placeholder='Country'
-                        value={country}
-                        onChange={(e) => setCountry(e.target.value)}
+                        type='number'
+                        placeholder='ZIP Code'
+                        value={zipCode}
+                        onChange={(e) => setZipCode(e.target.value)}
                     />
                 </Form.Group>
                 <br/>

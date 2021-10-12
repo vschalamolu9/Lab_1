@@ -62,7 +62,7 @@ const RestaurantItemsScreen = () => {
                                     <td>{item.item_name}</td>
                                     <td>{item.item_price}</td>
                                     <td>
-                                        <LinkContainer to={`/itemupdate`}>
+                                        <LinkContainer to={`/itemupdate/${item.item_id}`}>
                                             <Button className='btn-sm' variant='light'>UPDATE</Button>
                                         </LinkContainer>
                                     </td>

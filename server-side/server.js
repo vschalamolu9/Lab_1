@@ -21,16 +21,18 @@ app.get('/', (req, res)=>{
 });
 
 
-db.sequelize.sync({force: false}).then(()=>{
+db.sequelize.sync({force: true}).then(()=>{
     console.log("Drop and re-sync db.");
 });
 
 require('./routes/restaurant.routes')(app);
 require('./routes/item.routes')(app);
 require('./routes/user.routes')(app);
-require('./routes/order.routes')(app);
+require('./routes/order.routes')(app)
+
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, ()=>{
     console.log(`Server is running on port ${PORT}.`);
+
 })

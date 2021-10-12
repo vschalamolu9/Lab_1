@@ -57,7 +57,7 @@ export const logout = () => (dispatch) => {
 }
 
 
-export const register = (first_name, last_name, email_id, password, phone_number, street, city, province, country) => async (dispatch) => {
+export const register = (first_name, last_name, email_id, password, phone_number, street, city, province, country, zip_code) => async (dispatch) => {
     try {
         dispatch({
             type: USER_REGISTER_REQUEST,
@@ -71,7 +71,7 @@ export const register = (first_name, last_name, email_id, password, phone_number
 
         const { data } = await Axios.post(
             'http://localhost:5000/api/users/register',
-            { first_name, last_name, email_id, password, phone_number, street, city, province, country },
+            { first_name, last_name, email_id, password, phone_number, street, city, province, country, zip_code },
             config
         )
 
@@ -80,10 +80,10 @@ export const register = (first_name, last_name, email_id, password, phone_number
             payload: data,
         })
 
-        dispatch({
+        /*dispatch({
             type: USER_LOGIN_SUCCESS,
             payload: data,
-        })
+        })*/
 
         localStorage.setItem('userInfo', JSON.stringify(data))
     } catch (error) {
@@ -134,7 +134,7 @@ export const getUserDetails = (id, user_id) => async (dispatch, getState) => {
     }
 }
 
-export const updateUserProfile = (user_id, first_name, last_name, email_id, password, phone_number, street, city, province, country) => async (dispatch, getState) => {
+export const updateUserProfile = (user_id, first_name, last_name, email_id, password, phone_number, street, city, province, country, zip_code) => async (dispatch, getState) => {
     try {
         dispatch({
             type: USER_UPDATE_PROFILE_REQUEST,
@@ -150,7 +150,7 @@ export const updateUserProfile = (user_id, first_name, last_name, email_id, pass
             },
         }
 
-        const { data } = await Axios.put(`http://localhost:5000/api/users/profile`,{ user_id, first_name, last_name, email_id, password, phone_number, street, city, province, country }, config)
+        const { data } = await Axios.put(`http://localhost:5000/api/users/profile`,{ user_id, first_name, last_name, email_id, password, phone_number, street, city, province, country, zip_code }, config)
 
         dispatch({
             type: USER_UPDATE_PROFILE_SUCCESS,

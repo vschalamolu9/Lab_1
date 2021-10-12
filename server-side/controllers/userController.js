@@ -25,6 +25,7 @@ exports.loginUser = (req, res) => {
                     city : user.city,
                     province : user.province,
                     country : user.country,
+                    zip_code: user.zip_code,
                     token: generateToken(user.user_id)
                 });
             }
@@ -61,6 +62,7 @@ exports.registerUser = (req, res) => {
         city: req.body.city,
         province: req.body.province,
         country: req.body.country,
+        zip_code: req.body.zip_code,
     }
 
     User.create(user).then(data => {
@@ -87,6 +89,7 @@ exports.getUserProfile = (req, res) => {
                 city: data.city,
                 province: data.province,
                 country: data.country,
+                zip_code: data.zip_code
             });
         })
         .catch(err => {
@@ -112,6 +115,7 @@ exports.updateUserProfile = (req, res) => {
             data.city = req.body.city || data.city
             data.province = req.body.province || data.province
             data.country = req.body.country || data.country
+            data.zip_code = req.body.zip_code || data.zip_code
 
             data.save().then(
                 res.status(200).json({
@@ -124,6 +128,7 @@ exports.updateUserProfile = (req, res) => {
                     city: data.city,
                     province: data.province,
                     country: data.country,
+                    zip_code: data.zip_code,
                     token: generateToken(data.user_id)
                 })
             ).catch((error) => {

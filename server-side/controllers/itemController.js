@@ -15,6 +15,7 @@ exports.create = (req, res) => {
     const item = {
         item_name: req.body.item_name,
         restaurantRestaurantId: req.body.restaurantRestaurantId,
+        description: req.body.description,
         image: req.body.image,
         item_price: req.body.item_price,
         min_cal: req.body.min_cal,
@@ -64,6 +65,7 @@ exports.updateItem = (req, res) => {
         .then(data => {
             data.item_name = req.body.item_name || data.item_name
             data.image = req.body.image || data.image
+            data.description = req.body.description || data.description
             data.item_price = req.body.item_price || data.item_price
             data.min_cal = req.body.min_cal || data.min_cal
             data.max_cal = req.body.max_cal || data.max_cal
@@ -73,6 +75,7 @@ exports.updateItem = (req, res) => {
                 res.status(200).json({
                     item_name : data.item_name,
                     image : data.image,
+                    description: data.description,
                     item_price : data.item_price,
                     min_cal : data.min_cal,
                     max_cal : data.max_cal

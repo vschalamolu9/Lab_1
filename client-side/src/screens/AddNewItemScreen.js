@@ -1,15 +1,16 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState } from 'react'
 import {useDispatch, useSelector} from "react-redux";
 import {addNewMenuItem} from "../actions/itemActions";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
-import {Button, Col, Form, Row} from "react-bootstrap";
+import {Button, Form} from "react-bootstrap";
 import FormContainer from "../components/FormContainer";
 
-const AddNewItemScreen = ({location, history}) => {
+const AddNewItemScreen = ({ history}) => {
 
     const [itemName, setItemName] =useState('')
     const [image, setImage] = useState('')
+    const [description, setDescription] =useState('')
     const [itemPrice, setItemPrice] = useState('')
     const [minCal, setMinCal] = useState('')
     const [maxCal, setMaxCal] = useState('')
@@ -24,7 +25,7 @@ const AddNewItemScreen = ({location, history}) => {
 
     const submitHandler = (e) => {
         e.preventDefault()
-        dispatch(addNewMenuItem(itemName, image, itemPrice, minCal, maxCal, restaurantInfo.restaurant_id))
+        dispatch(addNewMenuItem(itemName, image, description, itemPrice, minCal, maxCal, restaurantInfo.restaurant_id))
         if(success){
             history.push('/restaurant/viewitems')
         }
@@ -55,6 +56,17 @@ const AddNewItemScreen = ({location, history}) => {
                         placeholder='Upload Image'
                         value={image}
                         onChange={(e) => setImage(e.target.value)}
+                    />
+                </Form.Group>
+                <br/>
+                <Form.Group controlId='description'>
+                    <Form.Label>Description</Form.Label>
+                    <Form.Control
+                        required
+                        type='textarea'
+                        placeholder='Description'
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
                     />
                 </Form.Group>
                 <br/>

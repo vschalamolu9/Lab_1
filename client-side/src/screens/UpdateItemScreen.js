@@ -1,28 +1,43 @@
 import React, {useState, useEffect} from 'react'
 import {useDispatch, useSelector} from "react-redux";
-import {updateItem} from "../actions/itemActions";
+import {listItemDetails, updateItem} from "../actions/itemActions";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
 import {Button, Form} from "react-bootstrap";
 import FormContainer from "../components/FormContainer";
 
-const UpdateItemScreen = ({match}) => {
+const UpdateItemScreen = ({match, history}) => {
 
     const [itemName, setItemName] =useState('')
     const [image, setImage] = useState('')
+    const [description, setDescription] =useState('')
     const [itemPrice, setItemPrice] = useState('')
     const [minCal, setMinCal] = useState('')
     const [maxCal, setMaxCal] = useState('')
 
     const dispatch = useDispatch()
 
-    const updateMenuItem = useSelector(state => state.updateMenuItem)
-    const {loading, error, itemInfo} = updateMenuItem
+    const itemDetails = useSelector(state => state.itemDetails)
+    const { loading, error, item} = itemDetails
 
+    useEffect(() => {
+        if(item.item_name){
+            setItemName(item.item_name)
+            setImage(item.image)
+            setDescription(item.description)
+            setItemPrice(item.item_price)
+            setMinCal(item.min_cal)
+            setMaxCal(item.max_cal)
+        }
+        else{
+            dispatch(listItemDetails(match.params.id))
+        }
+
+    }, [dispatch, item])
 
     const submitHandler = (e) => {
         e.preventDefault()
-        dispatch(updateItem(match.params.item_id, itemName, image, itemPrice, minCal, maxCal))
+        dispatch(updateItem(item.item_id, itemName, image, description, itemPrice, minCal, maxCal, item.restaurantRestaurantId))
     }
 
     return(
@@ -50,6 +65,17 @@ const UpdateItemScreen = ({match}) => {
                         placeholder='Upload Image'
                         value={image}
                         onChange={(e) => setImage(e.target.value)}
+                    />
+                </Form.Group>
+                <br/>
+                <Form.Group controlId='description'>
+                    <Form.Label>Description</Form.Label>
+                    <Form.Control
+                        required
+                        type='textarea'
+                        placeholder='Description'
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
                     />
                 </Form.Group>
                 <br/>

@@ -13,8 +13,8 @@ const ItemScreen = ({match, history}) => {
     const dispatch = useDispatch();
 
     const itemDetails = useSelector((state)=>state.itemDetails)
-
     const {loading, error, item} = itemDetails
+
 
     useEffect(()=>{
         dispatch(listItemDetails(match.params.id))
@@ -26,18 +26,21 @@ const ItemScreen = ({match, history}) => {
 
     return(
         <>
-            <Link className='btn btn-light my-3' to="/">Go Back</Link>
+            <Link className='btn btn-light my-3' to={`/restaurants/${item.restaurantRestaurantId}`}>Go Back</Link>
             {loading ? <Loader /> : error ? <Message variant='danger'>{error}</Message> : (<Row>
-                <Col md={6}>
-                    <Image src={item.image} alt={item.item_name} fluid></Image>
-                </Col>
                 <Col md={3}>
+                    <Image src={item.image} alt={item.item_name} fluid rounded/>
+                </Col>
+                <Col md={5}>
                     <ListGroup variant='flush'>
                         <ListGroup.Item>
                             <h3>{item.item_name}</h3>
                         </ListGroup.Item>
                         <ListGroup.Item>
-                            Price: ${item.item_price}
+                            {`Price: $${item.item_price} | ${item.min_cal}-${item.max_cal} Cal.`}
+                        </ListGroup.Item>
+                        <ListGroup.Item>
+                            {item.description}
                         </ListGroup.Item>
                     </ListGroup>
                 </Col>

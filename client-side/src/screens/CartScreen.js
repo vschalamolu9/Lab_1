@@ -14,7 +14,6 @@ const CartScreen = ({match, location, history}) => {
     const dispatch = useDispatch()
 
     const cart = useSelector(state => state.cart)
-
     const {cartItems} = cart
 
     useEffect(() => {
@@ -28,6 +27,7 @@ const CartScreen = ({match, location, history}) => {
     }
 
     const checkOutHandler = () => {
+        localStorage.removeItem('cartItems')
         history.push('/login?redirect=delivery')
     }
 
@@ -37,13 +37,13 @@ const CartScreen = ({match, location, history}) => {
                 <h1>Shopping Cart</h1>
                 {cartItems.length === 0 ? <Message>Your cart is empty <Link to='/'>Go Back</Link></Message> : (
                     <ListGroup variant='flush'>
-                        <Link to='/restaurants/'>Add more items</Link>
+                        <Link to={'/'}>Add more items</Link>
                         <br/>
                         {cartItems.map(item => (
                             <ListGroup.Item key={item.product}>
                                 <Row>
                                     <Col md={2}>
-                                        <Image src={item.image} alt={item.name} fluid rounded></Image>
+                                        <Image src={item.image} alt={item.name} fluid rounded />
                                     </Col>
                                     <Col md={3}>
                                         <Link to={`/item/${item.product}`}>{item.name}</Link>
@@ -62,7 +62,7 @@ const CartScreen = ({match, location, history}) => {
                                     <Col md={2}>
                                         <Button type='button' variant='light'
                                                 onClick = {() => removeFromCartHandler(item.product)}>
-                                            <i className='fas fa-trash'></i>
+                                            <i className='fas fa-trash'/>
                                         </Button>
                                     </Col>
                                 </Row>

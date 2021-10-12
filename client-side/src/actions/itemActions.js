@@ -90,7 +90,7 @@ export const addNewMenuItem = (item_name, image, item_price, min_cal, max_cal, r
     }
 }
 
-export const updateItem = (item_id, item_name, image, item_price, min_cal, max_cal) => async (dispatch, getState) => {
+export const updateItem = (item_id, item_name, image, item_price, min_cal, max_cal, restaurantRestaurantId) => async (dispatch, getState) => {
     try {
         dispatch({
             type: UPDATE_ITEM_REQUEST,
@@ -106,7 +106,7 @@ export const updateItem = (item_id, item_name, image, item_price, min_cal, max_c
             },
         }
 
-        const { data } = await Axios.put(`http://localhost:5000/api/items/update`,{ item_id, item_name, image, item_price, min_cal, max_cal }, config)
+        const { data } = await Axios.put(`http://localhost:5000/api/items/update`,{ item_id, item_name, image, item_price, min_cal, max_cal, restaurantRestaurantId }, config)
 
         dispatch({
             type: UPDATE_ITEM_SUCCESS,
