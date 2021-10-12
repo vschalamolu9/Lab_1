@@ -25,8 +25,6 @@ const RestaurantProfileScreen = ({ location, history }) => {
     const [maxDeliveryTime, setMaxDeliveryTime] = useState('')
     const [message,  setMessage] = useState(null)
 
-
-
     const dispatch = useDispatch()
 
     const restaurantDetails = useSelector((state) => state.restaurantDetails)
@@ -38,8 +36,6 @@ const RestaurantProfileScreen = ({ location, history }) => {
     const restaurantUpdateProfile = useSelector((state) => state.restaurantUpdateProfile)
     const { success } = restaurantUpdateProfile
 
-
-
     const restaurantOrdersList = useSelector((state) => state.restaurantOrdersList)
     const { loading: loadingOrders, error: errorOrders, orders } = restaurantOrdersList
 
@@ -48,27 +44,26 @@ const RestaurantProfileScreen = ({ location, history }) => {
             history.push('/restaurant/home')
         }
         else{
-            if(!restaurant.restaurant_name){
+            if(!restaurant){
                 dispatch(getRestaurantDetails(restaurantInfo.restaurant_id))
                 dispatch(getRestaurantOrdersList(restaurantInfo.restaurant_id))
             }
             else{
-                //dispatch(getRestaurantOrdersList(restaurant.restaurant_id))
+                dispatch(getRestaurantOrdersList(restaurantInfo.restaurant_id))
                 //dispatch(getRestaurantDetails(restaurant.restaurant_id))
-                setRestaurantName(restaurant.restaurant_name)
-                setImage(restaurant.image)
-                setDescription(restaurant.description)
-                setRestaurantEmail(restaurant.restaurant_email)
-                setPassword(restaurant.password)
-                setRestaurantContact(restaurant.restaurant_contact)
-                setRestaurantStreet(restaurant.restaurant_street)
-                setRestaurantCity(restaurant.restaurant_city)
-                setRestaurantState(restaurant.restaurant_state)
-                setRestaurantCountry(restaurant.restaurant_country)
-                setRestaurantZipCode(restaurant.restaurant_zip_code)
-                setDeliveryFee(restaurant.delivery_fee)
-                setMinDeliveryTime(restaurant.min_delivery_time)
-                setMaxDeliveryTime(restaurant.max_delivery_time)
+                setRestaurantName(restaurantInfo.restaurant_name)
+                setImage(restaurantInfo.image)
+                setDescription(restaurantInfo.description)
+                setRestaurantEmail(restaurantInfo.restaurant_email)
+                setRestaurantContact(restaurantInfo.restaurant_contact)
+                setRestaurantStreet(restaurantInfo.restaurant_street)
+                setRestaurantCity(restaurantInfo.restaurant_city)
+                setRestaurantState(restaurantInfo.restaurant_state)
+                setRestaurantCountry(restaurantInfo.restaurant_country)
+                setRestaurantZipCode(restaurantInfo.restaurant_zip_code)
+                setDeliveryFee(restaurantInfo.delivery_fee)
+                setMinDeliveryTime(restaurantInfo.min_delivery_time)
+                setMaxDeliveryTime(restaurantInfo.max_delivery_time)
             }
         }
     }, [dispatch, history, restaurantInfo, restaurant])
@@ -81,7 +76,7 @@ const RestaurantProfileScreen = ({ location, history }) => {
             }
         }
         else{
-            dispatch(updateRestaurantProfile(restaurant.restaurant_id, restaurantName, image, description, restaurantEmail, password, restaurantContact, restaurantStreet, restaurantCity, restaurantState,
+            dispatch(updateRestaurantProfile(restaurantInfo.restaurant_id, restaurantName, image, description, restaurantEmail, password, restaurantContact, restaurantStreet, restaurantCity, restaurantState,
                 restaurantCountry, restaurantZipCode, deliveryFee, minDeliveryTime, maxDeliveryTime
             ))
         }

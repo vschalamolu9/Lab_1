@@ -9,11 +9,17 @@ import Message from '../components/Message';
 const ItemScreen = ({match, history}) => {
 
     const [qty, setQty] = useState(1);
+    const [message, setMessage] = useState('')
 
     const dispatch = useDispatch();
 
     const itemDetails = useSelector((state)=>state.itemDetails)
     const {loading, error, item} = itemDetails
+
+    const cart = useSelector(state => state.cart)
+    const {cartItems} = cart
+
+
 
 
     useEffect(()=>{
@@ -21,6 +27,13 @@ const ItemScreen = ({match, history}) => {
     }, [dispatch, match])
 
     const addToCartHandler = (e) => {
+
+        /*if(cartItems){
+            for(let i=0)
+            if(cartItems[0].restaurant_id !== item.restaurantRestaurantId){
+
+            }
+        }*/
         history.push(`/cart/${match.params.id}?qty=${qty}`)
     }
 

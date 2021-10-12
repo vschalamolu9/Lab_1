@@ -78,14 +78,14 @@ export const getRestaurantDetails = (restaurant_id) => async (dispatch) => {
             }
         }
 
-        const {data} = await Axios.post('/api/restaurants/login', { restaurant_id }, config)
+        const {data} = await Axios.post(`/api/restaurants/profile`, { restaurant_id }, config)
 
         dispatch({
             type: RESTAURANT_DETAILS_SUCCESS,
             payload: data,
         })
 
-        localStorage.setItem('restaurantInfo', JSON.stringify(data))
+        localStorage.setItem('restaurant', JSON.stringify(data))
 
     }
     catch (error) {
@@ -101,6 +101,8 @@ export const getRestaurantDetails = (restaurant_id) => async (dispatch) => {
 
 export const restaurantLogout = () => (dispatch) => {
     localStorage.removeItem('restaurantInfo')
+    localStorage.removeItem('itemInfo')
+    localStorage.clear()
     dispatch({ type: RESTAURANT_LOGOUT })
     document.location.href = '/'
 }

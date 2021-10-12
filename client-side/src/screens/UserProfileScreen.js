@@ -20,7 +20,6 @@ const UserProfileScreen = ({ history }) => {
     const [city, setCity] = useState('')
     const [province, setProvince] = useState('')
     const [zipCode, setZipCode] = useState('')
-    const [country, setCountry] = useState('')
     const [message,  setMessage] = useState(null)
     const [value, setValue] = useState(null);
     const options = useMemo(()=>countryList().getData(), []);
@@ -39,7 +38,6 @@ const UserProfileScreen = ({ history }) => {
 
     const userUpdateProfile = useSelector((state) => state.userUpdateProfile)
     const { success } = userUpdateProfile
-
 
 
     const userOrdersList = useSelector((state) => state.userOrdersList)

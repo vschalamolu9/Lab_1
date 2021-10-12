@@ -60,28 +60,47 @@ exports.findAll = (req, res) => {
 
 exports.restaurantLogin = (req, res) => {
 
-    Restaurant.findOne({restaurant_email: req.body.restaurant_email, password: req.body.password})
-        .then(data => {
-            res.status(200).json({
-                restaurant_id : data.restaurant_id,
-                restaurant_name: data.restaurant_name,
-                image: data.image,
-                description: data.description,
-                restaurant_email: data.restaurant_email,
-                restaurant_contact: data.restaurant_contact,
-                restaurant_street: data.restaurant_street,
-                restaurant_city: data.restaurant_city,
-                restaurant_state: data.restaurant_state,
-                restaurant_zip_code: data.restaurant_zip_code,
-                restaurant_country: data.restaurant_country,
-                delivery_fee: data.delivery_fee,
-                min_delivery_time: data.min_delivery_time,
-                max_delivery_time: data.max_delivery_time,
-                rating: data.rating,
-                num_reviews: data.num_reviews,
-                token: generateRestaurantToken(data.restaurant_id, data.restaurant_email)
+    Restaurant.findOne({where: {restaurant_email: req.body.restaurant_email}}).then(data => {
+        if(!data){
+            res.status(400).send({
+                message: 'Unable to find restaurant.'
             })
-        })
+        }
+        else{
+            if(data.password === req.body.password){
+                res.status(200).send({
+                    restaurant_id : data.restaurant_id,
+                    restaurant_name: data.restaurant_name,
+                    image: data.image,
+                    description: data.description,
+                    restaurant_email: data.restaurant_email,
+                    restaurant_contact: data.restaurant_contact,
+                    restaurant_street: data.restaurant_street,
+                    restaurant_city: data.restaurant_city,
+                    restaurant_state: data.restaurant_state,
+                    restaurant_zip_code: data.restaurant_zip_code,
+                    restaurant_country: data.restaurant_country,
+                    delivery_fee: data.delivery_fee,
+                    min_delivery_time: data.min_delivery_time,
+                    max_delivery_time: data.max_delivery_time,
+                    rating: data.rating,
+                    num_reviews: data.num_reviews,
+                    token: generateRestaurantToken(data.restaurant_id, data.restaurant_email)
+                })
+            }
+            else{
+                res.status(400).send({
+                    message: 'Incorrect password.'
+                })
+            }
+        }
+    }).catch(err => {
+        res.status(500).send({
+            message: err.message || 'Some error occurred while logging in Restaurant.'
+        });
+    });
+
+
 
 }
 
@@ -139,8 +158,34 @@ exports.updateRestaurantProfile = (req, res) => {
 }
 
 // Find a single Tutorial with an id
-exports.findOne = (req, res) => {
+exports.findRestaurant = (req, res) => {
 
+    Restaurant.findOne({where :{ restaurant_id : req.body.restaurant_id}}).then(data => {
+        if(!data){
+            res.status(400).send({
+                message: 'Unable to find restaurant.'
+            })
+        }
+        res.status(200).send({
+            restaurant_name : data.restaurant_name,
+            image : data.image,
+            description : data.description,
+            restaurant_email : data.restaurant_email,
+            restaurant_contact : data.restaurant_contact,
+            restaurant_street : data.restaurant_street,
+            restaurant_city : data.restaurant_city,
+            restaurant_state : data.restaurant_state,
+            restaurant_country : data.restaurant_country,
+            restaurant_zip_code : data.restaurant_zip_code,
+            delivery_fee : data.delivery_fee,
+            min_delivery_time : data.min_delivery_time,
+            max_delivery_time : data.max_delivery_time,
+        })
+    }).catch(err => {
+        res.status(500).send({
+            message: err.message || 'Some error occurred while retrieving User profile.'
+        });
+    });
 };
 
 // Update a Tutorial by the id in the request

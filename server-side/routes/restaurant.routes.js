@@ -27,5 +27,7 @@ module.exports = app => {
 
     router.route('/getorderbyid').post(orders.fetchOrdersById);
 
+    router.route('/profile').post(restaurants.findRestaurant);
+
     app.use('/api/restaurants', router);
 }

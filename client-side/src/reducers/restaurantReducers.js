@@ -69,7 +69,7 @@ export const restaurantUpdateReducer = (state = { restaurant: {}}, action) => {
         case RESTAURANT_UPDATE_PROFILE_REQUEST:
             return { loading: true }
         case RESTAURANT_UPDATE_PROFILE_SUCCESS:
-            return { loading: false, success: true, restaurantInfo: action.payload }
+            return { loading: false, success: true, restaurant: action.payload }
         case RESTAURANT_UPDATE_PROFILE_FAIL:
             return { loading: false, error: action.payload }
         case RESTAURANT_LOGOUT:
