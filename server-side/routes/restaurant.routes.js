@@ -25,5 +25,7 @@ module.exports = app => {
 
     router.route('/profile').put(protectRestaurant, restaurants.updateRestaurantProfile);
 
+    router.route('/getorderbyid').post(orders.fetchOrdersById);
+
     app.use('/api/restaurants', router);
 }

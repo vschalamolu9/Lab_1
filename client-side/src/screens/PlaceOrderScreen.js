@@ -23,7 +23,8 @@ const PlaceOrderScreen = ({history}) => {
 
     //Calculate prices
     cart.itemsPrice = addDecimals(cart.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0))
-    cart.deliveryPrice = addDecimals(cart.itemsPrice > 100 ? 0 : 3.99)
+     //= addDecimals(cart.itemsPrice > 100 ? 0 : 3.99)
+    cart.deliveryPrice = cart.orderType === 'Delivery' ? (addDecimals(cart.itemsPrice > 100 ? 0 : 3.99)) : 0.00
     cart.taxPrice = addDecimals(Number((0.15 * cart.itemsPrice).toFixed(2)))
     cart.totalPrice = (Number(cart.itemsPrice) + Number(cart.deliveryPrice) + Number(cart.taxPrice)).toFixed(2)
 
@@ -53,7 +54,7 @@ const PlaceOrderScreen = ({history}) => {
             cart.taxPrice,
             cart.deliveryPrice,
             cart.totalPrice,
-            "DELIVERY",
+            cart.orderType,
             cart.paymentMethod,
             delivery_address,
             userInfo.user_id,
@@ -81,6 +82,11 @@ const PlaceOrderScreen = ({history}) => {
                             <h2>Payment Method</h2>
                             <strong>Method: </strong>
                             {cart.paymentMethod}
+                        </ListGroup.Item>
+                        <ListGroup.Item>
+                            <h2>Order Type</h2>
+                            <strong>Type: </strong>
+                            {cart.orderType}
                         </ListGroup.Item>
                         <ListGroup.Item>
                             <h2>Order Items</h2>

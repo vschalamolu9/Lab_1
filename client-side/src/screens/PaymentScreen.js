@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Form, Button, Col } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import FormContainer from '../components/FormContainer'
-import { savePaymentMethod } from "../actions/cartActions";
+import {saveOrderType, savePaymentMethod} from "../actions/cartActions";
 import CheckOutSteps from "../components/checkOutSteps";
 
 const PaymentScreen = ({history}) => {
@@ -15,12 +15,14 @@ const PaymentScreen = ({history}) => {
     }
 
     const [paymentMethod, setPaymentMethod] = useState('PayPal')
+    const [orderType, setOrderType] = useState('Delivery')
 
     const dispatch = useDispatch()
 
     const submitHandler = (e) => {
         e.preventDefault()
         dispatch(savePaymentMethod(paymentMethod))
+        dispatch(saveOrderType(orderType))
         history.push('/placeorder')
     }
 
@@ -30,7 +32,7 @@ const PaymentScreen = ({history}) => {
             <h1>Select Payment Method</h1>
             <Form onSubmit={submitHandler}>
                 <Form.Group>
-                    <Form.Label as='legend'>Select Method</Form.Label>
+                    <Form.Label as='legend'>Select Payment Method</Form.Label>
                 <Col>
                     <Form.Check
                         type='radio'
@@ -50,6 +52,28 @@ const PaymentScreen = ({history}) => {
                         onChange={(e) => setPaymentMethod(e.target.value)}
                     />*/}
                 </Col>
+                </Form.Group>
+                <Form.Group>
+                    <Form.Label as='legend'>Select Payment Method</Form.Label>
+                    <Col>
+                        <Form.Check
+                            type='radio'
+                            label='Delivery'
+                            id='Delivery'
+                            name='orderType'
+                            value='Delivery'
+                            checked
+                            onChange={(e) => setOrderType(e.target.value)}
+                        />
+                        <Form.Check
+                        type='radio'
+                        label='Pick Up'
+                        id='pickUp'
+                        name='orderType'
+                        value='Pick Up'
+                        onChange={(e) => setOrderType(e.target.value)}
+                    />
+                    </Col>
                 </Form.Group>
                 <br/>
                 <Button type='submit' variant='primary'>

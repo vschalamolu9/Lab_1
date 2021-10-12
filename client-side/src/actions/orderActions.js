@@ -82,11 +82,50 @@ export const getOrderDetails = (order_id) => async (dispatch, getState) => {
         const config = {
             headers: {
                 'Content-type' : 'application/json',
-                Authorization: `Bearer ${userInfo.token}`,
+                Authorization: `Bearer ${userInfo.token}`
             },
         }
 
         const { data } = await Axios.post(`/api/users/getorderbyid`,
+            { order_id }, config)
+
+        dispatch({
+            type: ORDER_DETAILS_SUCCESS,
+            payload: data,
+        })
+    } catch (error) {
+        const message =
+            error.response && error.response.data.message
+                ? error.response.data.message
+                : error.message
+        if (message === 'Not authorized, token failed') {
+            dispatch(logout())
+        }
+        dispatch({
+            type: ORDER_DETAILS_FAIL,
+            payload: message,
+        })
+    }
+}
+
+export const getRestaurantOrderDetails = (order_id) => async (dispatch, getState) => {
+    try {
+        dispatch({
+            type: ORDER_DETAILS_REQUEST,
+        })
+
+        const {
+            restaurantLogin: { restaurantInfo },
+        } = getState()
+
+        const config = {
+            headers: {
+                'Content-type' : 'application/json',
+                Authorization: `Bearer ${restaurantInfo.token}`
+            },
+        }
+
+        const { data } = await Axios.post(`/api/restaurants/getorderbyid`,
             { order_id }, config)
 
         dispatch({

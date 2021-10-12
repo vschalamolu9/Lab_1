@@ -48,11 +48,13 @@ const RestaurantProfileScreen = ({ location, history }) => {
             history.push('/restaurant/home')
         }
         else{
-            if(!restaurant.restaurant_email){
+            if(!restaurant.restaurant_name){
                 dispatch(getRestaurantDetails(restaurantInfo.restaurant_id))
                 dispatch(getRestaurantOrdersList(restaurantInfo.restaurant_id))
             }
             else{
+                //dispatch(getRestaurantOrdersList(restaurant.restaurant_id))
+                //dispatch(getRestaurantDetails(restaurant.restaurant_id))
                 setRestaurantName(restaurant.restaurant_name)
                 setImage(restaurant.image)
                 setDescription(restaurant.description)
@@ -73,13 +75,17 @@ const RestaurantProfileScreen = ({ location, history }) => {
 
     const submitHandler = (e) => {
         e.preventDefault()
-        if (password !== confirmPassword) {
-            setMessage('Passwords do not match')
-        } else {
+        if(password !=='' && confirmPassword !== ''){
+            if (password !== confirmPassword) {
+                setMessage('Passwords do not match')
+            }
+        }
+        else{
             dispatch(updateRestaurantProfile(restaurant.restaurant_id, restaurantName, image, description, restaurantEmail, password, restaurantContact, restaurantStreet, restaurantCity, restaurantState,
                 restaurantCountry, restaurantZipCode, deliveryFee, minDeliveryTime, maxDeliveryTime
-                ))
+            ))
         }
+
     }
 
     return (
@@ -94,7 +100,6 @@ const RestaurantProfileScreen = ({ location, history }) => {
                     <Form.Group controlId='restaurantName'>
                         <Form.Label>Restaurant Name</Form.Label>
                         <Form.Control
-                            required
                             type='text'
                             placeholder='Enter Restaurant name'
                             value={restaurantName}
@@ -105,7 +110,6 @@ const RestaurantProfileScreen = ({ location, history }) => {
                     <Form.Group controlId='image'>
                         <Form.Label>Image</Form.Label>
                         <Form.Control
-                            required
                             type='text'
                             placeholder='Upload image'
                             value={image}
@@ -116,7 +120,6 @@ const RestaurantProfileScreen = ({ location, history }) => {
                     <Form.Group controlId='description'>
                         <Form.Label>Description</Form.Label>
                         <Form.Control
-                            required
                             type='textarea'
                             placeholder='Description'
                             value={description}
@@ -127,7 +130,6 @@ const RestaurantProfileScreen = ({ location, history }) => {
                     <Form.Group controlId='restaurantEmail'>
                         <Form.Label>Email Address</Form.Label>
                         <Form.Control
-                            required
                             type='email'
                             placeholder='Enter email'
                             value={restaurantEmail}
@@ -145,7 +147,7 @@ const RestaurantProfileScreen = ({ location, history }) => {
                         />
                     </Form.Group>
                     <br/>
-                    <Form.Group controlId='password'>
+                    <Form.Group controlId='cnfPassword'>
                         <Form.Label>Confirm Password</Form.Label>
                         <Form.Control
                             type='password'
@@ -158,7 +160,6 @@ const RestaurantProfileScreen = ({ location, history }) => {
                     <Form.Group controlId='restaurantContact'>
                         <Form.Label>Contact Number</Form.Label>
                         <Form.Control
-                            required
                             type='text'
                             placeholder='Contact Number'
                             value={restaurantContact}
@@ -169,7 +170,6 @@ const RestaurantProfileScreen = ({ location, history }) => {
                     <Form.Group controlId='restaurantStreet'>
                         <Form.Label>Street</Form.Label>
                         <Form.Control
-                            required
                             type='text'
                             placeholder='Street'
                             value={restaurantStreet}
@@ -180,7 +180,6 @@ const RestaurantProfileScreen = ({ location, history }) => {
                     <Form.Group controlId='restaurantCity'>
                         <Form.Label>City</Form.Label>
                         <Form.Control
-                            required
                             type='text'
                             placeholder='restaurantCity'
                             value={restaurantCity}
@@ -191,7 +190,6 @@ const RestaurantProfileScreen = ({ location, history }) => {
                     <Form.Group controlId='restaurantState'>
                         <Form.Label>State</Form.Label>
                         <Form.Control
-                            required
                             type='text'
                             placeholder='Province or State'
                             value={restaurantState}
@@ -202,7 +200,6 @@ const RestaurantProfileScreen = ({ location, history }) => {
                     <Form.Group controlId='restaurantCountry'>
                         <Form.Label>Country</Form.Label>
                         <Form.Control
-                            required
                             type='text'
                             placeholder='Country'
                             value={restaurantCountry}
@@ -223,6 +220,7 @@ const RestaurantProfileScreen = ({ location, history }) => {
                         <tr>
                             <th>ID</th>
                             <th>DATE</th>
+                            <th>ORDER TYPE</th>
                             <th>TOTAL</th>
                             <th>VIEW RECEIPT</th>
                         </tr>
@@ -232,10 +230,11 @@ const RestaurantProfileScreen = ({ location, history }) => {
                             <tr key={order.order_id}>
                                 <td>{order.order_id}</td>
                                 <td>{order.createdAt.substring(0,10)}</td>
+                                <td>{order.order_type}</td>
                                 <td>{order.total_price}</td>
                                 <td>
-                                    <LinkContainer to={`order/${order.order_id}`}>
-                                        <Button className='btn-sm' variant='light'>View Order</Button>
+                                    <LinkContainer to={`/order/${order.order_id}`}>
+                                        <Button className='btn-sm' variant='light' disabled>View Order</Button>
                                     </LinkContainer>
                                 </td>
                             </tr>

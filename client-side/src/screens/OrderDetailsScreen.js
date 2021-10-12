@@ -3,12 +3,12 @@ import {Row, Col, ListGroup, Image, Card} from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from "../components/Message";
 import Loader from "../components/Loader";
-import {getOrderDetails} from "../actions/orderActions";
+import {getOrderDetails, getRestaurantOrderDetails} from "../actions/orderActions";
 import {Link} from "react-router-dom";
+import {getUserDetails} from "../actions/userActions";
 
 const OrderDetailsScreen = ({match}) => {
 
-    const order_id = match.params.id
     const dispatch = useDispatch()
 
     const orderDetails = useSelector(state => state.orderDetails)
@@ -17,13 +17,23 @@ const OrderDetailsScreen = ({match}) => {
     const userLogin = useSelector(state => state.userLogin)
     const {userInfo} = userLogin
 
+    const userDetails = useSelector((state) => state.userDetails)
+    const { loading: loadingUser, error: loadingUserError, user } = userDetails
+
+    const order_id = match.params.id
+
     useEffect(() => {
         dispatch(getOrderDetails(order_id))
-    }, [])
+        if(!user){
+            dispatch(getUserDetails('profile',order.userUserId))
+        }
+    }, [match])
+
+    const customer = !userInfo ? user : userInfo;
 
     return loading ? <Loader /> : error ? <Message variant='danger'>{error}</Message> :
         <>
-            {order_id && <Message variant='success'>Order Placed Successfully</Message>}
+            { order_id && <Message variant='success'>Order Placed Successfully</Message>}
             <Row>
                 <h1>Order: {order_id}</h1>
                 <Col md={8}>
@@ -31,10 +41,10 @@ const OrderDetailsScreen = ({match}) => {
                         <ListGroup.Item>
                             <h2>Delivery</h2>
                             <p>
-                                <strong>Name: {userInfo.first_name} {userInfo.last_name}</strong>
+                                <strong>Name: {customer.first_name} {customer.last_name}</strong>
                             </p>
                             <p>
-                                Email: <Link to={`${userInfo.email_id}`}>{userInfo.email_id}</Link>
+                                Email: <Link to={`${customer.email_id}`}>{customer.email_id}</Link>
                             </p>
                             <p>
                                 <strong>Address: </strong>
@@ -45,6 +55,11 @@ const OrderDetailsScreen = ({match}) => {
                             <h2>Payment Method</h2>
                             <strong>Method: </strong>
                             {order.payment_method}
+                        </ListGroup.Item>
+                        <ListGroup.Item>
+                            <h2>Order Type</h2>
+                            <strong>Type: </strong>
+                            {order.order_type}
                         </ListGroup.Item>
                         <ListGroup.Item>
                             <h2>Order Items</h2>
