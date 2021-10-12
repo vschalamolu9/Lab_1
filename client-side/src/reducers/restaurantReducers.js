@@ -19,13 +19,6 @@ import {
     RESTAURANT_ITEMS_LIST_REQUEST,
     RESTAURANT_ITEMS_LIST_SUCCESS, RESTAURANT_ITEMS_LIST_FAIL
 } from "../constants/restaurantConstants";
-import {
-    USER_DETAILS_FAIL,
-    USER_DETAILS_REQUEST,
-    USER_DETAILS_RESET,
-    USER_DETAILS_SUCCESS
-} from "../constants/userConstants";
-import {ITEM_LIST_FAIL, ITEM_LIST_REQUEST, ITEM_LIST_SUCCESS} from "../constants/itemConstants";
 
 export const restaurantListReducer = (state = {restaurants: []}, action) => {
 

@@ -10,17 +10,9 @@ import {
     ADD_NEW_ITEM_FAIL,
     UPDATE_ITEM_REQUEST,
     UPDATE_ITEM_FAIL,
-    UPDATE_ITEM_SUCCESS
+    UPDATE_ITEM_SUCCESS, DELETE_ITEM_REQUEST, DELETE_ITEM_SUCCESS, DELETE_ITEM_FAIL
 } from "../constants/itemConstants";
 import Axios from 'axios';
-import {
-    USER_DETAILS_FAIL,
-    USER_DETAILS_REQUEST, USER_DETAILS_SUCCESS,
-    USER_LOGIN_SUCCESS,
-    USER_REGISTER_FAIL,
-    USER_REGISTER_REQUEST,
-    USER_REGISTER_SUCCESS, USER_UPDATE_PROFILE_FAIL, USER_UPDATE_PROFILE_REQUEST, USER_UPDATE_PROFILE_SUCCESS
-} from "../constants/userConstants";
 import {logout} from "./userActions";
 
 export const listItems = (id) => async(dispatch) => {
@@ -90,7 +82,7 @@ export const addNewMenuItem = (item_name,description, image, item_price, min_cal
     }
 }
 
-export const updateItem = (item_id, item_name, image, item_price, min_cal, max_cal, restaurantRestaurantId, description) => async (dispatch, getState) => {
+export const updateItem = (item_id, item_name, image, description, item_price, min_cal, max_cal, restaurantRestaurantId) => async (dispatch, getState) => {
     try {
         dispatch({
             type: UPDATE_ITEM_REQUEST,
@@ -125,6 +117,45 @@ export const updateItem = (item_id, item_name, image, item_price, min_cal, max_c
         }
         dispatch({
             type: UPDATE_ITEM_FAIL,
+            payload: message,
+        })
+    }
+}
+
+export const deleteItem = (item_id) => async (dispatch, getState) => {
+    try {
+        dispatch({
+            type: DELETE_ITEM_REQUEST,
+        })
+
+        const {
+            restaurantLogin: { restaurantInfo },
+        } = getState()
+
+        const config = {
+            headers: {
+                'Content-Type' : 'application/json',
+                Authorization: `Bearer ${restaurantInfo.token}`,
+            },
+        }
+
+        const { data } = await Axios.put(`/api/items/delete`,{ item_id }, config)
+
+        dispatch({
+            type: DELETE_ITEM_SUCCESS,
+            payload: data,
+        })
+
+    } catch (error) {
+        const message =
+            error.response && error.response.data.message
+                ? error.response.data.message
+                : error.message
+        if (message === 'Not authorized, token failed') {
+            dispatch(logout())
+        }
+        dispatch({
+            type: DELETE_ITEM_FAIL,
             payload: message,
         })
     }

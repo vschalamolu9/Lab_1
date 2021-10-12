@@ -5,6 +5,7 @@ import Message from "../components/Message";
 import Loader from "../components/Loader";
 import {Button, Form} from "react-bootstrap";
 import FormContainer from "../components/FormContainer";
+import {restaurantMenuItemsList} from "../actions/restaurantActions";
 
 const UpdateItemScreen = ({match, history}) => {
 
@@ -38,6 +39,7 @@ const UpdateItemScreen = ({match, history}) => {
     const submitHandler = (e) => {
         e.preventDefault()
         dispatch(updateItem(item.item_id, itemName, image, description, itemPrice, minCal, maxCal, item.restaurantRestaurantId))
+        history.push('/restaurant/profile')
     }
 
     return(

@@ -8,7 +8,13 @@ import {
     restaurantRegisterReducer,
     restaurantUpdateReducer
 } from './reducers/restaurantReducers';
-import {addNewItemReducer, itemDetailsReducer, itemListReducer, updateMenuItemReducer} from "./reducers/itemReducers";
+import {
+    addNewItemReducer,
+    deleteMenuItemReducer,
+    itemDetailsReducer,
+    itemListReducer,
+    updateMenuItemReducer
+} from "./reducers/itemReducers";
 import {cartReducer} from "./reducers/cartReducers";
 import {
     userLoginReducer,
@@ -44,7 +50,8 @@ const reducer = combineReducers({
     restaurantOrdersList: restaurantOrdersListReducer,
     restaurantItemsList: restaurantItemListReducer,
     addNewItem: addNewItemReducer,
-    updateMenuItem: updateMenuItemReducer
+    updateMenuItem: updateMenuItemReducer,
+    deleteMenuItem: deleteMenuItemReducer
 })
 
 const cartItemsFromStorage = localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : []

@@ -26,9 +26,7 @@ const AddNewItemScreen = ({ history}) => {
     const submitHandler = (e) => {
         e.preventDefault()
         dispatch(addNewMenuItem(itemName, description, image, itemPrice, minCal, maxCal, restaurantInfo.restaurant_id))
-        if(success){
-            history.push('/restaurant/viewitems')
-        }
+        history.push('/restaurant/profile')
     }
 
     return(

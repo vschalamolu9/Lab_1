@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import {Button, Row, Col, ListGroup, Image, Card} from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from "../components/Message";
-import CheckOutSteps from "../constants/checkOutSteps";
+import CheckOutSteps from "../components/checkOutSteps";
 import {createOrder} from "../actions/orderActions";
 import {createOrderItems} from "../actions/orderItemsActions";
 import {Link} from "react-router-dom";

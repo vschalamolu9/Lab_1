@@ -4,8 +4,9 @@ import Loader from "../components/Loader";
 import Message from "../components/Message";
 import {LinkContainer} from 'react-router-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import {listItems} from "../actions/itemActions";
 import {restaurantMenuItemsList} from "../actions/restaurantActions";
+import {deleteItem} from "../actions/itemActions";
+import {Link} from "react-router-dom";
 
 const RestaurantItemsScreen = () => {
 
@@ -21,9 +22,10 @@ const RestaurantItemsScreen = () => {
         dispatch(restaurantMenuItemsList(restaurantInfo.restaurant_id))
     }, [dispatch])
 
-    const itemDeleteHandler = () => {
-
-    }
+    /*const itemDeleteHandler = (e) => {
+        e.preventDefault()
+        dispatch(deleteItem(temp))
+    }*/
 
     return(
         <>
@@ -67,9 +69,9 @@ const RestaurantItemsScreen = () => {
                                         </LinkContainer>
                                     </td>
                                     <td>
-                                        <LinkContainer to="/">
-                                            <Button className='btn-sm' variant='light' onClick={itemDeleteHandler}>DELETE</Button>
-                                        </LinkContainer>
+                                        <Link to='/'>
+                                            <Button className='btn-sm' variant='light'>DELETE</Button>
+                                        </Link>
                                     </td>
                                 </tr>
                             ))}

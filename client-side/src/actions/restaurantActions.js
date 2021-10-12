@@ -130,11 +130,6 @@ export const registerRestaurant = (restaurant_name, image, description, restaura
             payload: data,
         })
 
-        dispatch({
-            type: RESTAURANT_LOGIN_SUCCESS,
-            payload: data,
-        })
-
         localStorage.setItem('restaurantData', JSON.stringify(data))
     } catch (error) {
         dispatch({

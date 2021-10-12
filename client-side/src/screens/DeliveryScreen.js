@@ -3,7 +3,7 @@ import { Form, Button } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import FormContainer from '../components/FormContainer'
 import { saveDeliveryAddress} from "../actions/cartActions";
-import CheckOutSteps from "../constants/checkOutSteps";
+import CheckOutSteps from "../components/checkOutSteps";
 
 const DeliveryScreen = ({history}) => {
 

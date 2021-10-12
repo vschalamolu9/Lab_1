@@ -28,15 +28,15 @@ const RegisterRestaurantScreen = ({ location, history }) => {
     const dispatch = useDispatch()
 
     const restaurantRegister = useSelector((state) => state.restaurantRegister)
-    const { loading, error, restaurantData } = restaurantRegister
+    const { loading, error, restaurantInfo } = restaurantRegister
 
-    const redirect = location.search ? location.search.split('=')[1] : '/'
+    const redirect = location.search ? location.search.split('=')[1] : '/home'
 
     useEffect(() => {
-        if (restaurantData) {
+        if (restaurantInfo) {
             history.push(redirect)
         }
-    }, [history, restaurantData, redirect])
+    }, [history, restaurantInfo, redirect])
 
     const submitHandler = (e) => {
         e.preventDefault()
@@ -46,7 +46,6 @@ const RegisterRestaurantScreen = ({ location, history }) => {
         else{
             dispatch(registerRestaurant(restaurantName, image, description, email,password, phoneNumber, street, city, province,
                 country, zipCode, deliveryFee, minDeliveryTime, maxDeliveryTime))
-            history.push('/restaurant?redirect=profile')
         }
 
     }
