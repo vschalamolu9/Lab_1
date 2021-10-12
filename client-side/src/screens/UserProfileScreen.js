@@ -19,9 +19,10 @@ const UserProfileScreen = ({ history }) => {
     const [street, setStreet] = useState('')
     const [city, setCity] = useState('')
     const [province, setProvince] = useState('')
-    const [zipCode, setZipCode] = useState('');
+    const [zipCode, setZipCode] = useState('')
+    const [country, setCountry] = useState('')
     const [message,  setMessage] = useState(null)
-    const [value, setValue] = useState('');
+    const [value, setValue] = useState(null);
     const options = useMemo(()=>countryList().getData(), []);
 
     const changeHandler = value => {
@@ -44,11 +45,6 @@ const UserProfileScreen = ({ history }) => {
     const userOrdersList = useSelector((state) => state.userOrdersList)
     const { loading: loadingOrders, error: errorOrders, orders } = userOrdersList
 
-    const validateName = (enteredName) => {
-        let re = /^[a-zA-Z ]{2,30}$/;
-        return re.test(enteredName);
-    }
-
     const validatePhoneNumber = (phoneNumber) => {
         let regex = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
         return regex.test(phoneNumber);
@@ -60,24 +56,24 @@ const UserProfileScreen = ({ history }) => {
     }
 
     useEffect(() => {
-
         if (!userInfo) {
             history.push('/login')
         } else {
-            if(!user.email_id){
+            console.log('User Logged In')
+            if(!user){
                 dispatch(getUserDetails('profile', userInfo.user_id))
-                dispatch(getUserOrdersList(userInfo.user_id))
             }
             else{
-                setFirstName(user.first_name)
-                setLastName(user.last_name)
-                setEmail(user.email_id)
-                setPhoneNumber(user.phone_number)
-                setCity(user.city)
-                setStreet(user.street)
-                setProvince(user.province)
+                dispatch(getUserOrdersList(userInfo.user_id))
+                setFirstName(userInfo.first_name)
+                setLastName(userInfo.last_name)
+                setEmail(userInfo.email_id)
+                setPhoneNumber(userInfo.phone_number)
+                setCity(userInfo.city)
+                setStreet(userInfo.street)
+                setProvince(userInfo.province)
                 setValue(value)
-                setZipCode(user.zipCode)
+                setZipCode(userInfo.zip_code)
 
             }
         }
@@ -85,22 +81,22 @@ const UserProfileScreen = ({ history }) => {
 
     const submitHandler = (e) => {
         e.preventDefault()
-        if(!validateName(firstName) || !validateName(lastName)){
-            setMessage('Please enter a valid name')
-        }
         if(!validateEmail(email)){
             setMessage('Please enter a valid email')
         }
         if(password !== confirmPassword){
             setMessage('Passwords do not match')
         }
-        if(password.length < 10){
-            setMessage('Your password should contain atleast 10 characters')
-        }
         if(!validatePhoneNumber(phoneNumber)){
             setMessage('Please enter a valid phone number')
         } else {
-            dispatch(updateUserProfile(user.user_id, firstName, lastName, email, password, phoneNumber, street, city, province, value.label, zipCode))
+            if(!value){
+                dispatch(updateUserProfile(userInfo.user_id, firstName, lastName, email, password, phoneNumber, street, city, province, userInfo.country, zipCode))
+            }
+            else{
+                dispatch(updateUserProfile(userInfo.user_id, firstName, lastName, email, password, phoneNumber, street, city, province, value.label, zipCode))
+            }
+
         }
     }
 
@@ -156,7 +152,7 @@ const UserProfileScreen = ({ history }) => {
                         />
                     </Form.Group>
                     <br/>
-                    <Form.Group controlId='password'>
+                    <Form.Group controlId='cnfPassword'>
                         <Form.Label>Confirm Password</Form.Label>
                         <Form.Control
                             type='password'
@@ -169,7 +165,6 @@ const UserProfileScreen = ({ history }) => {
                     <Form.Group controlId='phoneNumber'>
                         <Form.Label>Phone Number</Form.Label>
                         <Form.Control
-                            required
                             type='text'
                             placeholder='Phone Number'
                             value={phoneNumber}
@@ -180,7 +175,6 @@ const UserProfileScreen = ({ history }) => {
                     <Form.Group controlId='street'>
                         <Form.Label>Street</Form.Label>
                         <Form.Control
-                            required
                             type='text'
                             placeholder='Street'
                             value={street}
@@ -191,7 +185,6 @@ const UserProfileScreen = ({ history }) => {
                     <Form.Group controlId='city'>
                         <Form.Label>City</Form.Label>
                         <Form.Control
-                            required
                             type='text'
                             placeholder='City'
                             value={city}
@@ -202,7 +195,6 @@ const UserProfileScreen = ({ history }) => {
                     <Form.Group controlId='province'>
                         <Form.Label>Province</Form.Label>
                         <Form.Control
-                            required
                             type='text'
                             placeholder='Province or State'
                             value={province}
@@ -218,7 +210,6 @@ const UserProfileScreen = ({ history }) => {
                     <Form.Group controlId='zipCode'>
                         <Form.Label>ZIP Code</Form.Label>
                         <Form.Control
-                            required
                             type='text'
                             placeholder='ZIP Code'
                             value={zipCode}
@@ -240,6 +231,7 @@ const UserProfileScreen = ({ history }) => {
                             <th>ID</th>
                             <th>DATE</th>
                             <th>TOTAL</th>
+                            <th>Pick Up/Delivery</th>
                             <th>VIEW RECEIPT</th>
                         </tr>
                         </thead>
@@ -249,9 +241,10 @@ const UserProfileScreen = ({ history }) => {
                                 <td>{order.order_id}</td>
                                 <td>{order.createdAt.substring(0,10)}</td>
                                 <td>{order.total_price}</td>
+                                <td>{order.order_type}</td>
                                 <td>
                                     <LinkContainer to={`order/${order.order_id}`}>
-                                        <Button className='btn-sm' variant='light'>Details</Button>
+                                        <Button className='btn-sm' variant='light'>View Receipt</Button>
                                     </LinkContainer>
                                 </td>
                             </tr>

@@ -13,6 +13,7 @@ const PlaceOrderScreen = ({history}) => {
 
     const cart = useSelector(state => state.cart)
 
+
     const userLogin = useSelector((state) => state.userLogin)
     const { userInfo } = userLogin
 
@@ -22,7 +23,7 @@ const PlaceOrderScreen = ({history}) => {
 
     //Calculate prices
     cart.itemsPrice = addDecimals(cart.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0))
-    cart.deliveryPrice = addDecimals(cart.itemsPrice > 100 ? 0 : 10)
+    cart.deliveryPrice = addDecimals(cart.itemsPrice > 100 ? 0 : 3.99)
     cart.taxPrice = addDecimals(Number((0.15 * cart.itemsPrice).toFixed(2)))
     cart.totalPrice = (Number(cart.itemsPrice) + Number(cart.deliveryPrice) + Number(cart.taxPrice)).toFixed(2)
 
