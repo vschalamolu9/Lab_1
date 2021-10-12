@@ -22,7 +22,7 @@ export const createOrderItems = (
             },
         }
 
-        const { data } = await Axios.post(`http://localhost:5000/api/users/addorderitems`,
+        const { data } = await Axios.post(`/api/users/addorderitems`,
             { quantity, itemItemId, orderOrderId }, config)
 
         dispatch({

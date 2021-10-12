@@ -5,11 +5,10 @@ import {
     CART_SAVE_PAYMENT_METHOD
 } from "../constants/cartConstants";
 import Axios from 'axios';
-import {useSelector} from "react-redux";
 
 export const addToCart = (id, qty) => async(dispatch, getState) => {
 
-    const { data } = await Axios.get(`http://localhost:5000/api/items/${id}`)
+    const { data } = await Axios.get(`/api/items/${id}`)
 
     dispatch({
         type: CART_ADD_ITEM,

@@ -39,7 +39,7 @@ export const createOrder = (
             },
         }
 
-        const { data } = await Axios.post(`http://localhost:5000/api/users/newOrder`,
+        const { data } = await Axios.post(`/api/users/newOrder`,
             { items_price,
                 tax_price,
                 delivery_fee,
@@ -86,7 +86,7 @@ export const getOrderDetails = (order_id) => async (dispatch, getState) => {
             },
         }
 
-        const { data } = await Axios.post(`http://localhost:5000/api/users/getorderbyid`,
+        const { data } = await Axios.post(`/api/users/getorderbyid`,
             { order_id }, config)
 
         dispatch({
@@ -126,7 +126,7 @@ export const getUserOrdersList = (user_id) => async (dispatch, getState) => {
             },
         }
 
-        const { data } = await Axios.post(`http://localhost:5000/api/users/getuserorders`,
+        const { data } = await Axios.post(`/api/users/getuserorders`,
             { user_id }, config)
 
         dispatch({
@@ -166,7 +166,7 @@ export const getRestaurantOrdersList = (restaurant_id) => async (dispatch, getSt
             },
         }
 
-        const { data } = await Axios.post(`http://localhost:5000/api/restaurants/getrestaurantorders`,
+        const { data } = await Axios.post(`/api/restaurants/getrestaurantorders`,
             { restaurant_id }, config)
 
         dispatch({

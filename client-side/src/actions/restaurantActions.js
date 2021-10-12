@@ -19,13 +19,12 @@ import {
     RESTAURANT_ITEMS_LIST_SUCCESS, RESTAURANT_ITEMS_LIST_FAIL,
 } from "../constants/restaurantConstants";
 import Axios from 'axios';
-import {ITEM_LIST_FAIL, ITEM_LIST_REQUEST, ITEM_LIST_SUCCESS} from "../constants/itemConstants";
 
 export const listRestaurants = () => async(dispatch) => {
     try{
         dispatch({type: RESTAURANT_LIST_REQUEST})
 
-        const {data} = await Axios.get('http://localhost:5000/api/restaurants')
+        const {data} = await Axios.get('/api/restaurants')
 
         dispatch({type: RESTAURANT_LIST_SUCCESS, payload: data})
     }
@@ -46,7 +45,7 @@ export const restaurantSignin = (restaurant_email, password) => async (dispatch)
             }
         }
 
-        const {data} = await Axios.post('http://localhost:5000/api/restaurants/login', { restaurant_email, password}, config)
+        const {data} = await Axios.post('/api/restaurants/login', { restaurant_email, password}, config)
 
         dispatch({
             type: RESTAURANT_LOGIN_SUCCESS,
@@ -79,7 +78,7 @@ export const getRestaurantDetails = (restaurant_id) => async (dispatch) => {
             }
         }
 
-        const {data} = await Axios.post('http://localhost:5000/api/restaurants/login', { restaurant_id }, config)
+        const {data} = await Axios.post('/api/restaurants/login', { restaurant_id }, config)
 
         dispatch({
             type: RESTAURANT_DETAILS_SUCCESS,
@@ -120,7 +119,7 @@ export const registerRestaurant = (restaurant_name, image, description, restaura
         }
 
         const { data } = await Axios.post(
-            'http://localhost:5000/api/restaurants/register',
+            '/api/restaurants/register',
             { restaurant_name, image, description, restaurant_email,password, restaurant_contact, restaurant_street, restaurant_city, restaurant_state,
                 restaurant_country, restaurant_zip_code, delivery_fee, min_delivery_time, max_delivery_time},
             config

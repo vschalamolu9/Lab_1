@@ -25,7 +25,7 @@ export const login = (email, password) => async (dispatch) => {
         }
 
         const { data } = await Axios.post(
-            'http://localhost:5000/api/users/login',
+            '/api/users/login',
             { email, password },
             config
         )
@@ -70,7 +70,7 @@ export const register = (first_name, last_name, email_id, password, phone_number
         }
 
         const { data } = await Axios.post(
-            'http://localhost:5000/api/users/register',
+            '/api/users/register',
             { first_name, last_name, email_id, password, phone_number, street, city, province, country, zip_code },
             config
         )
@@ -113,7 +113,7 @@ export const getUserDetails = (id, user_id) => async (dispatch, getState) => {
             },
         }
 
-        const { data } = await Axios.post(`http://localhost:5000/api/users/${id}`,{ user_id }, config)
+        const { data } = await Axios.post(`/api/users/${id}`,{ user_id }, config)
 
         dispatch({
             type: USER_DETAILS_SUCCESS,
@@ -150,7 +150,7 @@ export const updateUserProfile = (user_id, first_name, last_name, email_id, pass
             },
         }
 
-        const { data } = await Axios.put(`http://localhost:5000/api/users/profile`,{ user_id, first_name, last_name, email_id, password, phone_number, street, city, province, country, zip_code }, config)
+        const { data } = await Axios.put(`/api/users/profile`,{ user_id, first_name, last_name, email_id, password, phone_number, street, city, province, country, zip_code }, config)
 
         dispatch({
             type: USER_UPDATE_PROFILE_SUCCESS,

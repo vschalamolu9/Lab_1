@@ -27,7 +27,7 @@ export const listItems = (id) => async(dispatch) => {
 
     try{
         dispatch({type: ITEM_LIST_REQUEST})
-        const {data} = await Axios.get(`http://localhost:5000/api/restaurants/${id}`)
+        const {data} = await Axios.get(`/api/restaurants/${id}`)
         dispatch({type: ITEM_LIST_SUCCESS, payload:data})
     }
     catch(error){
@@ -40,7 +40,7 @@ export const listItemDetails = (id) => async(dispatch) => {
     try{
         dispatch({type: ITEM_DETAILS_REQUEST})
 
-        const {data} = await Axios.get(`http://localhost:5000/api/items/${id}`)
+        const {data} = await Axios.get(`/api/items/${id}`)
 
         dispatch({type: ITEM_DETAILS_SUCCESS, payload: data})
     }
@@ -68,7 +68,7 @@ export const addNewMenuItem = (item_name, image, item_price, min_cal, max_cal, r
         }
 
         const { data } = await Axios.post(
-            'http://localhost:5000/api/items/additem',
+            '/api/items/additem',
             { item_name, image, item_price, min_cal, max_cal, restaurantRestaurantId },
             config
         )
@@ -106,7 +106,7 @@ export const updateItem = (item_id, item_name, image, item_price, min_cal, max_c
             },
         }
 
-        const { data } = await Axios.put(`http://localhost:5000/api/items/update`,{ item_id, item_name, image, item_price, min_cal, max_cal, restaurantRestaurantId }, config)
+        const { data } = await Axios.put(`/api/items/update`,{ item_id, item_name, image, item_price, min_cal, max_cal, restaurantRestaurantId }, config)
 
         dispatch({
             type: UPDATE_ITEM_SUCCESS,
